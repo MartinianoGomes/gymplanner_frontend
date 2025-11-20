@@ -12,6 +12,11 @@ Este repositório contém a interface do usuário construída com React 19 e Vit
 
 **Status**: template/projeto em desenvolvimento
 
+## Design
+
+O design do projeto está disponível no Figma:
+- [GymPlanner — Figma Design](https://www.figma.com/design/uLURkJm086aDsFQss439ho/gym-project?node-id=0-1&t=KCAPYRyVyZ8bDYOz-1)
+
 ## Começando (desenvolvimento)
 
 Pré-requisitos:
