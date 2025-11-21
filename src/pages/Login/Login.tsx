@@ -5,7 +5,7 @@ export default function Login() {
         <div className="grid min-h-screen w-full md:grid-cols-2">
             <div className="flex flex-col justify-center m-auto px-3 min-w-[80%] bg-white md:max-w-[80%] md:justify-center">
                 <div className="mb-8 text-center">
-                    <img src={logoImage} alt="Logo GymPlanner" className="max-w-[240px] h-auto mx-auto" />
+                    <img src={logoImage} alt="Logo GymPlanner" className="h-auto mx-auto" />
                 </div>
 
                 <h2 className="text-2xl font-semibold mb-2.5">Entrar</h2>
@@ -23,7 +23,7 @@ export default function Login() {
                         id="email"
                         placeholder="Digite seu e-mail"
                         required
-                        className="w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-gray-800 text-sm transition-all min-h-[44px] mb-6 placeholder:text-gray-400 focus:outline-none focus:bg-white focus:shadow-[0_0_0_2px_#f97316]"
+                        className="w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-gray-800 text-sm transition-all mb-6 placeholder:text-gray-400 focus:outline-none focus:bg-white focus:shadow-[0_0_0_2px_#f97316]"
                     />
 
                     <label htmlFor="password" className="block text-gray-700 font-medium mb-2 text-sm">
@@ -34,7 +34,7 @@ export default function Login() {
                         id="password"
                         placeholder="Digite sua senha"
                         required
-                        className="w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-gray-800 text-sm transition-all min-h-[44px] mb-6 placeholder:text-gray-400 focus:outline-none focus:bg-white focus:shadow-[0_0_0_2px_#f97316]"
+                        className="w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-gray-800 text-sm transition-all mb-6 placeholder:text-gray-400 focus:outline-none focus:bg-white focus:shadow-[0_0_0_2px_#f97316]"
                     />
 
                     <button
