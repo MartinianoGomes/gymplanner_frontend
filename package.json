@@ -10,7 +10,6 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "docker": "docker compose up --build",
-    "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
