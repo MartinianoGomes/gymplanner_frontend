@@ -1,12 +1,11 @@
 import { Routes, Route } from "react-router"
+import Login from "./pages/Login/Login"
 
 function App() {
   return (
-    <div>
-      <Routes>
-        <Route path="/gymplanner" element={<div>Gymplanner</div>} />
-      </Routes>
-    </div>
+    <Routes>
+      <Route path="/gymplanner/login" element={<Login />} />
+    </Routes>
   )
 }
 
