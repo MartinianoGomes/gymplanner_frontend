@@ -4,7 +4,7 @@ import Login from "./pages/Login/Login"
 function App() {
   return (
     <Routes>
-      <Route path="/gymplanner/login" element={<Login />} />
+      <Route path="/login" element={<Login />} />
     </Routes>
   )
 }
