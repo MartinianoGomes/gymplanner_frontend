@@ -1,6 +1,6 @@
 import axios from "axios";
 
 export const api = axios.create({
-    baseURL: "https://gymplanner-api.vercel.app/",
+    baseURL: "http://localhost:3000/",
     withCredentials: true
 })
