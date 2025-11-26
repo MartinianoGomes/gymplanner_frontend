@@ -14,7 +14,7 @@ export default function Login() {
         try {
             const data = { email, password };
 
-            const response = await api.post('/auth/login', data);  // cookies incluídos
+            const response = await api.post('/auth/login', data);
 
             alert(response.data.message ?? "Login feito com sucesso!");
 
