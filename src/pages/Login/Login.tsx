@@ -1,43 +1,29 @@
-import { useState } from 'react';
+// import { useState } from 'react';
+// import { AxiosError } from 'axios';
+// import { useNavigate } from 'react-router';
+import { useForm, type SubmitHandler } from "react-hook-form";
 
+// import { api } from '../../services/api/api';
 import logoImage from '../../assets/login/logo-1.svg';
-import { api } from '../../services/api/api';
-import { AxiosError } from 'axios';
+import type { LoginFormInputs } from './types';
+import { api } from "../../services/api/api";
+import { AxiosError } from "axios";
+import { useNavigate } from "react-router";
+
 
 export default function Login() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-
-    const onSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-
-        try {
-            const data = { email, password };
-
-            const response = await api.post('/auth/login', data);
-
-            alert(response.data.message ?? "Login feito com sucesso!");
-
-            const user = await api.get('/me');
-
-            console.log(JSON.stringify(user.data));
-        } catch (error) {
-            if (error instanceof AxiosError) {
-                const status = error.response?.status;
-                const backendErr = error.response?.data?.error;
-
-                switch (status) {
-                    case 400:
-                        return alert("Credenciais inválidas.");
-                    case 401:
-                        return alert("E-mail ou senha incorretos.");
+    const navigate = useNavigate();
+    const { register, handleSubmit } = useForm<LoginFormInputs>()
+    const onSubmit: SubmitHandler<LoginFormInputs> = (data) => {
+        api.post('/auth/login', data)
+            .then(() => {
+                navigate('/');
+            })
+            .catch((error) => {
+                if (error instanceof AxiosError) {
+                    alert(error.response?.data.message);
                 }
-
-                return alert(backendErr ?? "Erro inesperado ao fazer login.");
-            }
-
-            alert("Erro inesperado.");
-        }
+            });
     }
 
     return (
@@ -53,54 +39,56 @@ export default function Login() {
                     Faça login na sua conta e aproveite todos os benefícios gratuitamente.
                 </p>
 
-                <form onSubmit={onSubmit} className="flex flex-col">
-                    <label htmlFor="email" className="block text-gray-700 font-medium mb-2 text-sm">
-                        E-mail
-                    </label>
+                <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
+                    <label htmlFor="email" className="block text-gray-700 font-medium mb-2 text-sm">E-mail</label>
+
                     <input
                         type="email"
                         id="email"
                         placeholder="Digite seu e-mail"
                         required
-                        onChange={(e) => setEmail(e.target.value)}
+                        {...register("email", { required: true })}
                         className="w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-gray-800 text-sm transition-all mb-6 placeholder:text-gray-400 focus:outline-none focus:bg-white focus:shadow-[0_0_0_2px_#f97316]"
                     />
 
-                    <label htmlFor="password" className="block text-gray-700 font-medium mb-2 text-sm">
-                        Senha
-                    </label>
+                    <label htmlFor="password" className="block text-gray-700 font-medium mb-2 text-sm">Senha</label>
+
                     <input
                         type="password"
                         id="password"
                         placeholder="Digite sua senha"
                         required
-                        onChange={(e) => setPassword(e.target.value)}
-                        className="w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-gray-800 text-sm transition-all mb-6 placeholder:text-gray-400 focus:outline-none focus:bg-white focus:shadow-[0_0_0_2px_#f97316]"
+                        {...register("password", { required: true })}
+                        className="w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-gray-800 text-sm transition-all mb-2 placeholder:text-gray-400 focus:outline-none focus:bg-white focus:shadow-[0_0_0_2px_#f97316]"
                     />
+
+                    <p className="text-[13px] text-gray-600 mb-6">
+                        Esqueceu sua senha? {' '}
+                        <a href="/forgot-password" className="no-underline text-orange-500 hover:underline">
+                            Clique aqui
+                        </a>
+                    </p>
 
                     <button
                         type="submit"
-                        className="w-full py-3 px-4 border-none rounded-md text-base cursor-pointer mb-4 transition-colors bg-orange-600 text-white hover:bg-orange-700"
+                        className="w-full py-3 px-4 border-none rounded-md text-base cursor-pointer mb-2 transition-colors bg-orange-600 text-white hover:bg-orange-700"
                     >
                         Entrar
                     </button>
 
-                    <p className="text-[13px] text-center text-gray-600">
-                        Não possui conta?{' '}
+                    <p className="text-[13px] text-gray-600 text-center mt-2">
+                        Não possui conta? {' '}
                         <a href="/register" className="no-underline text-orange-500 hover:underline">
                             Clique aqui e realize seu cadastro
                         </a>
+                        .
                     </p>
                 </form>
-
-                <footer className="text-xs text-center mt-8 text-gray-400">
-                    © 2025 Copy. Todos os direitos reservados.
-                </footer>
             </div>
 
             <div
                 className="flex-1 h-auto bg-[url('../../assets/login/image-woman-1.png')] bg-cover bg-center bg-no-repeat bg-orange-500 max-md:hidden"
-            />
+            ></div>
         </div>
     );
 };
