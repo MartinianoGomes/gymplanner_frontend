@@ -1,14 +1,10 @@
-// import { useState } from 'react';
-// import { AxiosError } from 'axios';
-// import { useNavigate } from 'react-router';
-import { useForm, type SubmitHandler } from "react-hook-form";
-
-// import { api } from '../../services/api/api';
-import logoImage from '../../assets/login/logo-1.svg';
-import type { LoginFormInputs } from './types';
 import { api } from "../../services/api/api";
+import { useForm, type SubmitHandler } from "react-hook-form";
 import { AxiosError } from "axios";
 import { useNavigate } from "react-router";
+
+import logoImage from '../../assets/login/logo-1.svg';
+import type { LoginFormInputs } from './types';
 
 
 export default function Login() {
