@@ -3,21 +3,41 @@ import { useForm, type SubmitHandler } from 'react-hook-form';
 import { api } from '../../services/api/api';
 import { AxiosError } from 'axios';
 
-import type RegisterFormInputs from './types';
-import logoImage from '../../../public/logo-1.svg';
+import { registerSchema, type RegisterData } from './types';
+import logoImage from '../../assets/global/logo-1.svg';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { toast } from 'sonner';
+import { useState } from 'react';
 
 export default function Register() {
     const navigate = useNavigate();
-    const { register, handleSubmit } = useForm<RegisterFormInputs>()
-    const onSubmit: SubmitHandler<RegisterFormInputs> = (data) => {
+
+    const [isLoading, setIsLoading] = useState(false);
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+    } = useForm<RegisterData>({
+        resolver: yupResolver(registerSchema)
+    })
+
+    const onSubmit: SubmitHandler<RegisterData> = (data) => {
+        setIsLoading(true);
+
         api.post('/auth/register', data)
-            .then(() => {
-                navigate('/login');
+            .then(({ status }) => {
+                if (status === 201) toast.success('Cadastro realizado com sucesso! Faça login para continuar.');
+
+                navigate('/');
             })
             .catch((error) => {
                 if (error instanceof AxiosError) {
-                    alert(error.response?.data.message);
+                    toast.error(error.response?.data.message || 'Erro ao realizar cadastro. Tente novamente.');
                 }
+            })
+            .finally(() => {
+                setIsLoading(false);
             });
     }
 
@@ -45,49 +65,66 @@ export default function Register() {
                         type="text"
                         id="name"
                         placeholder="Digite seu nome completo"
-                        required
-                        {...register("name", { required: true })}
-                        className="w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-gray-800 text-sm transition-all mb-6 placeholder:text-gray-400 focus:outline-none focus:bg-white focus:shadow-[0_0_0_2px_#f97316]"
+                        {...register("name")}
+                        className="w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-gray-800 text-sm transition-all placeholder:text-gray-400 focus:outline-none focus:bg-white focus:shadow-[0_0_0_2px_#f97316]"
                     />
 
-                    <label htmlFor="email" className="block text-gray-700 font-bold mb-2 text-sm">E-mail</label>
+                    {errors.name && (
+                        <p className="text-red-500 text-sm mt-2">{errors.name.message}</p>
+                    )}
+
+                    <label htmlFor="email" className="block text-gray-700 font-bold mt-5 mb-2 text-sm">E-mail</label>
 
                     <input
                         type="email"
                         id="email"
                         placeholder="Digite seu e-mail"
-                        required
-                        {...register("email", { required: true })}
-                        className="w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-gray-800 text-sm transition-all mb-6 placeholder:text-gray-400 focus:outline-none focus:bg-white focus:shadow-[0_0_0_2px_#f97316]"
+                        {...register("email")}
+                        className="w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-gray-800 text-sm transition-all placeholder:text-gray-400 focus:outline-none focus:bg-white focus:shadow-[0_0_0_2px_#f97316]"
                     />
 
-                    <label htmlFor="password" className="block text-gray-700 font-bold mb-2 text-sm">Senha</label>
+                    {errors.email && (
+                        <p className="text-red-500 text-sm mt-2">{errors.email.message}</p>
+                    )}
+
+                    <label htmlFor="password" className="block text-gray-700 font-bold mt-5 mb-2 text-sm">Senha</label>
 
                     <input
                         type="password"
                         id="password"
                         placeholder="Digite sua senha"
-                        required
-                        {...register("password", { required: true })}
-                        className="w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-gray-800 text-sm transition-all mb-6 placeholder:text-gray-400 focus:outline-none focus:bg-white focus:shadow-[0_0_0_2px_#f97316]"
+                        {...register("password")}
+                        className="w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-gray-800 text-sm transition-all placeholder:text-gray-400 focus:outline-none focus:bg-white focus:shadow-[0_0_0_2px_#f97316]"
                     />
 
-                    <label htmlFor="confirmPassword" className="block text-gray-700 font-bold mb-2 text-sm">Confirmar Senha</label>
+                    {errors.password && (
+                        <p className="text-red-500 text-sm mt-2">{errors.password.message}</p>
+                    )}
+
+                    <label htmlFor="confirmPassword" className="block text-gray-700 font-bold mt-5 mb-2 text-sm">Confirmar Senha</label>
 
                     <input
                         type="password"
                         id="confirmPassword"
                         placeholder="Confirme sua senha"
-                        required
-                        {...register("confirmPassword", { required: true })}
-                        className="w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-gray-800 text-sm transition-all mb-6 placeholder:text-gray-400 focus:outline-none focus:bg-white focus:shadow-[0_0_0_2px_#f97316]"
+                        {...register("confirmPassword")}
+                        className="w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-gray-800 text-sm transition-all placeholder:text-gray-400 focus:outline-none focus:bg-white focus:shadow-[0_0_0_2px_#f97316]"
                     />
+
+                    {errors.confirmPassword && (
+                        <p className="text-red-500 text-sm mt-2">{errors.confirmPassword.message}</p>
+                    )}
 
                     <button
                         type="submit"
-                        className="w-full py-3 px-4 border-none rounded-md text-base cursor-pointer mb-2 transition-colors bg-orange-600 text-white hover:bg-orange-700"
+                        disabled={isLoading}
+                        className={`flex items-center justify-center w-full py-3 px-4 border-none rounded-md text-base cursor-pointer mt-5 mb-2 transition-colors ${isLoading ? "bg-orange-400 cursor-not-allowed" : "bg-orange-500 hover:not-focus:bg-orange-600"} text-white`}
                     >
-                        Entrar
+                        {isLoading ? (
+                            <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        ) : (
+                            <div>Cadastrar</div>
+                        )}
                     </button>
 
                     <p className="text-[13px] text-gray-600 text-center mt-2">
