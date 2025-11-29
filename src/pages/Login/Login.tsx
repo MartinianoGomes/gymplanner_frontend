@@ -1,24 +1,45 @@
 import { api } from "../../services/api/api";
 import { useForm, type SubmitHandler } from "react-hook-form";
+import { useState } from "react";
 import { AxiosError } from "axios";
 import { useNavigate } from "react-router";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { toast } from "sonner";
 
 import logoImage from "../../../public/logo-1.svg";
-import type LoginFormInputs from './types';
-
+import { loginFormSchema, type LoginFormData } from "./types";
 
 export default function Login() {
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+    } = useForm<LoginFormData>({
+        resolver: yupResolver(loginFormSchema),
+    });
+
     const navigate = useNavigate();
-    const { register, handleSubmit } = useForm<LoginFormInputs>();
-    const onSubmit: SubmitHandler<LoginFormInputs> = (data) => {
+
+    const [isLoading, setIsLoading] = useState(false);
+
+    const onSubmit: SubmitHandler<LoginFormData> = (data) => {
+        setIsLoading(true);
+
         api.post('/auth/login', data)
-            .then(() => {
+            .then(({ status }) => {
+                if (status === 200) {
+                    toast.success("Login realizado com sucesso!");
+                }
+
                 navigate('/');
             })
             .catch((error) => {
                 if (error instanceof AxiosError) {
-                    alert(error.response?.data.message);
+                    toast.error(error.response?.data.message || "Erro ao realizar login. Tente novamente.");
                 }
+            })
+            .finally(() => {
+                setIsLoading(false);
             });
     }
 
@@ -42,23 +63,29 @@ export default function Login() {
                         type="email"
                         id="email"
                         placeholder="Digite seu e-mail"
-                        required
-                        {...register("email", { required: true })}
-                        className="w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-gray-800 text-sm transition-all mb-6 placeholder:text-gray-400 focus:outline-none focus:bg-white focus:shadow-[0_0_0_2px_#f97316]"
+                        {...register("email")}
+                        className="w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-gray-800 text-sm transition-all placeholder:text-gray-400 focus:outline-none focus:bg-white focus:shadow-[0_0_0_2px_#f97316]"
                     />
 
-                    <label htmlFor="password" className="block text-gray-700 font-bold mb-2 text-sm">Senha</label>
+                    {errors.email && (
+                        <p className="text-red-500 text-sm mt-2">{errors.email.message}</p>
+                    )}
+
+                    <label htmlFor="password" className="block text-gray-700 font-bold mt-5 mb-2 text-sm">Senha</label>
 
                     <input
                         type="password"
                         id="password"
                         placeholder="Digite sua senha"
-                        required
-                        {...register("password", { required: true })}
-                        className="w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-gray-800 text-sm transition-all mb-2 placeholder:text-gray-400 focus:outline-none focus:bg-white focus:shadow-[0_0_0_2px_#f97316]"
+                        {...register("password")}
+                        className="w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-gray-800 text-sm transition-all placeholder:text-gray-400 focus:outline-none focus:bg-white focus:shadow-[0_0_0_2px_#f97316]"
                     />
 
-                    <p className="text-[13px] text-gray-600 mb-6">
+                    {errors.password && (
+                        <span className="text-red-500 text-sm mt-2">{errors.password.message}</span>
+                    )}
+
+                    <p className="text-[13px] text-gray-600 mb-6 mt-3 text-right">
                         Esqueceu sua senha? {' '}
                         <a href="/forgot-password" className="no-underline text-orange-500 hover:underline">
                             Clique aqui
@@ -67,9 +94,14 @@ export default function Login() {
 
                     <button
                         type="submit"
-                        className="w-full py-3 px-4 border-none rounded-md text-base cursor-pointer mb-2 transition-colors bg-orange-600 text-white hover:bg-orange-700"
+                        disabled={isLoading}
+                        className={`flex items-center justify-center w-full py-3 px-4 border-none rounded-md text-base cursor-pointer mb-2 transition-colors ${isLoading ? "bg-orange-400 cursor-not-allowed" : "bg-orange-500 hover:not-focus:bg-orange-600"} text-white`}
                     >
-                        Entrar
+                        {isLoading ? (
+                            <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        ) : (
+                            <div>Entrar</div>
+                        )}
                     </button>
 
                     <p className="text-[13px] text-gray-600 text-center mt-2">
@@ -85,6 +117,6 @@ export default function Login() {
             <div
                 className="flex-1 h-auto bg-[url('../../assets/login/image-woman-1.png')] bg-cover bg-center bg-no-repeat bg-orange-500 max-md:hidden"
             ></div>
-        </div>
+        </div >
     );
 };
