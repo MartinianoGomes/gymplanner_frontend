@@ -90,6 +90,7 @@ export default function Login() {
                         <a href="/forgot-password" className="no-underline text-orange-500 hover:underline">
                             Clique aqui
                         </a>
+                        .
                     </p>
 
                     <button
