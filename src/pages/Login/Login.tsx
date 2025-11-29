@@ -32,9 +32,9 @@ export default function Login() {
                 navigate('/');
             })
             .catch((error) => {
-                if (error instanceof AxiosError) toast.error("Ocorreu um erro ao tentar fazer login. Por favor, tente novamente mais tarde.");
+                if (error instanceof AxiosError && !error.response) toast.error("Ocorreu um erro ao tentar fazer login. Por favor, tente novamente mais tarde.");
 
-                if (error.response?.status === 401) toast.error(error.response?.data.message || "Credenciais inválidas. Por favor, tente novamente.");
+                if (error instanceof AxiosError && error.response?.status === 401) toast.error(error.response?.data.message || "Credenciais inválidas. Por favor, tente novamente.");
             })
             .finally(() => {
                 setIsLoading(false);
