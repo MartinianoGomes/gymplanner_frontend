@@ -27,21 +27,14 @@ export default function Login() {
 
         api.post('/auth/login', data)
             .then(({ status }) => {
-                if (status === 200) {
-                    toast.success("Login realizado com sucesso!");
-                }
+                if (status === 200) toast.success("Login realizado com sucesso!");
 
                 navigate('/');
             })
             .catch((error) => {
-                if (error instanceof AxiosError) {
-                    toast.error("Ocorreu um erro ao tentar fazer login. Por favor, tente novamente mais tarde.");
-                    return;
-                }
+                if (error instanceof AxiosError) toast.error("Ocorreu um erro ao tentar fazer login. Por favor, tente novamente mais tarde.");
 
-                if (error.response?.status === 401) {
-                    toast.error(error.response?.data.message || "Credenciais inválidas. Por favor, tente novamente.");
-                }
+                if (error.response?.status === 401) toast.error(error.response?.data.message || "Credenciais inválidas. Por favor, tente novamente.");
             })
             .finally(() => {
                 setIsLoading(false);
