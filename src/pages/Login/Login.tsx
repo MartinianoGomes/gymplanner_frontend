@@ -34,8 +34,8 @@ export default function Login() {
                 navigate('/');
             })
             .catch((error) => {
-                if (error instanceof AxiosError) {
-                    toast.error(error.response?.data.message || "Erro ao realizar login. Tente novamente.");
+                if (error instanceof AxiosError && error.response?.status === 401) {
+                    toast.error(error.response?.data.message || "Credenciais inválidas. Por favor, tente novamente.");
                 }
             })
             .finally(() => {
