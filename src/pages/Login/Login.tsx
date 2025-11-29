@@ -3,13 +3,13 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { AxiosError } from "axios";
 import { useNavigate } from "react-router";
 
-import logoImage from '../../assets/login/logo-1.svg';
-import type { LoginFormInputs } from './types';
+import logoImage from "../../../public/logo-1.svg";
+import type LoginFormInputs from './types';
 
 
 export default function Login() {
     const navigate = useNavigate();
-    const { register, handleSubmit } = useForm<LoginFormInputs>()
+    const { register, handleSubmit } = useForm<LoginFormInputs>();
     const onSubmit: SubmitHandler<LoginFormInputs> = (data) => {
         api.post('/auth/login', data)
             .then(() => {
@@ -29,14 +29,14 @@ export default function Login() {
                     <img src={logoImage} alt="Logo GymPlanner" className="h-auto mx-auto" />
                 </div>
 
-                <h2 className="text-2xl font-semibold mb-2.5">Entrar</h2>
+                <h2 className="text-2xl font-bold mb-2.5">Entrar</h2>
 
                 <p className="text-sm text-gray-600 mb-8">
                     Faça login na sua conta e aproveite todos os benefícios gratuitamente.
                 </p>
 
                 <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
-                    <label htmlFor="email" className="block text-gray-700 font-medium mb-2 text-sm">E-mail</label>
+                    <label htmlFor="email" className="block text-gray-700 font-bold mb-2 text-sm">E-mail</label>
 
                     <input
                         type="email"
@@ -47,7 +47,7 @@ export default function Login() {
                         className="w-full px-4 py-3 bg-gray-100 border-none rounded-lg text-gray-800 text-sm transition-all mb-6 placeholder:text-gray-400 focus:outline-none focus:bg-white focus:shadow-[0_0_0_2px_#f97316]"
                     />
 
-                    <label htmlFor="password" className="block text-gray-700 font-medium mb-2 text-sm">Senha</label>
+                    <label htmlFor="password" className="block text-gray-700 font-bold mb-2 text-sm">Senha</label>
 
                     <input
                         type="password"
