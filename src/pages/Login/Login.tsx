@@ -6,7 +6,7 @@ import { useNavigate } from "react-router";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "sonner";
 
-import logoImage from "../../../public/logo-1.svg";
+import logoImage from "../../assets/global/logo-1.svg";
 import { loginFormSchema, type LoginFormData } from "./types";
 
 export default function Login() {
