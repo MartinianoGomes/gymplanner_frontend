@@ -29,7 +29,7 @@ export default function Register() {
             .then(({ status }) => {
                 if (status === 201) toast.success('Cadastro realizado com sucesso! Faça login para continuar.');
 
-                navigate('/');
+                navigate('/login');
             })
             .catch((error) => {
                 if (error instanceof AxiosError) {
