@@ -47,7 +47,7 @@ export default function Register() {
                 className="flex-1 h-auto bg-[url('../../assets/register/image-woman-2.png')] bg-cover bg-center bg-no-repeat bg-orange-500 max-md:hidden"
             ></div>
 
-            <div className="flex flex-col justify-center m-auto px-3 min-w-[80%] bg-white md:max-w-[80%] md:justify-center">
+            <div className="flex flex-col justify-center m-auto px-10 min-w-[70%] bg-white md:justify-center">
                 <div className="mb-8 text-center">
                     <img src={logoImage} alt="Logo GymPlanner" className="h-auto mx-auto" />
                 </div>

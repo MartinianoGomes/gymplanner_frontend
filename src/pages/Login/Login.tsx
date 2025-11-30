@@ -43,7 +43,7 @@ export default function Login() {
 
     return (
         <div className="grid min-h-screen w-full md:grid-cols-2">
-            <div className="flex flex-col justify-center m-auto px-3 min-w-[80%] bg-white md:max-w-[80%] md:justify-center">
+            <div className="flex flex-col justify-center m-auto px-10 min-w-[70%] bg-white md:justify-center">
                 <div className="mb-8 text-center">
                     <img src={logoImage} alt="Logo GymPlanner" className="h-auto mx-auto" />
                 </div>
