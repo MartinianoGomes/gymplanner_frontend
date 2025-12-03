@@ -3,27 +3,10 @@ import { api } from "../../../services/api/api";
 import { useNavigate } from "react-router";
 import { useState } from "react";
 import { toast } from "sonner";
-import type { LoggedUser } from "./types";
 
 export default function NavMenu() {
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
-
-    async function userData(): Promise<LoggedUser> {
-        setIsLoading(true);
-        await api.get('/me')
-            .then(({ data }) => {
-                return data;
-            })
-            .catch(() => {
-                toast.error('Erro ao buscar dados do usuário.');
-            })
-            .finally(() => {
-                setIsLoading(false);
-            });
-    }
-
-    const user = userData();
 
     const handleLogout = () => {
         setIsLoading(true);
@@ -55,7 +38,14 @@ export default function NavMenu() {
                 <div className="bg-[#DBDBDB] rounded-tl-lg rounded-tr-lg">
                     <div className="mx-8 py-7 flex items-center justify-between gap-25 text-sm">
                         <div className="flex flex-col">
-                            <span>{user}</span>
+                            <span>
+                                {
+                                    // TODO: Puxar nome do usuário logado
+                                    api.get('/me')
+                                        .then(response => response.data.name)
+                                        .catch(() => 'Usuário')
+                                }
+                            </span>
                             <span>martinianogomes@gmail.com</span>
                         </div>
 
