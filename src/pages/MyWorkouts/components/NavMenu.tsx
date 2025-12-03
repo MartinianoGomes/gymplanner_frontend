@@ -24,7 +24,7 @@ export default function NavMenu() {
 
     const handleLogout = () => {
         setIsLoading(true);
-        api.post('/logout')
+        api.post('/auth/logout')
             .then(() => {
                 toast.success('Logout realizado com sucesso!');
                 navigate('/login');
