@@ -1,19 +1,33 @@
 import Logout from "./assets/Logout.svg"
 import { api } from "../../../services/api/api";
 import { useNavigate } from "react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "sonner";
+import type { LoggedUser } from "./types";
 
 export default function NavMenu() {
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
 
+    const [user, setUser] = useState<LoggedUser | null>(null);
+
+    useEffect(() => {
+        api.get("/me")
+            .then(res => {
+                setUser(res.data);
+            })
+            .catch(() => {
+                toast.error("Você não está autenticado.");
+                navigate("/login");
+            });
+    }, []);
+
     const handleLogout = () => {
         setIsLoading(true);
         api.post('/logout')
             .then(() => {
-                navigate('/login');
                 toast.success('Logout realizado com sucesso!');
+                navigate('/login');
             })
             .catch(() => {
                 toast.error('Erro ao realizar logout.');
@@ -21,7 +35,7 @@ export default function NavMenu() {
             .finally(() => {
                 setIsLoading(false);
             });
-    }
+    };
 
     return (
         <div className="flex flex-row h-full">
@@ -38,32 +52,23 @@ export default function NavMenu() {
                 <div className="bg-[#DBDBDB] rounded-tl-lg rounded-tr-lg">
                     <div className="mx-8 py-7 flex items-center justify-between gap-25 text-sm">
                         <div className="flex flex-col">
-                            <span>
-                                {
-                                    // TODO: Puxar nome do usuário logado
-                                    api.get('/me')
-                                        .then(response => response.data.name)
-                                        .catch(() => 'Usuário')
-                                }
-                            </span>
-                            <span>martinianogomes@gmail.com</span>
+                            <span>{user?.name ?? "Carregando..."}</span>
+                            <span>{user?.email ?? "Carregando..."}</span>
                         </div>
 
                         <button
                             disabled={isLoading}
                             onClick={handleLogout}
                         >
-                            {
-                                isLoading ? (
-                                    <div className="w-6 h-6 border-2 border-gray-500 border-t-transparent rounded-full animate-spin"></div>
-                                ) : (
-                                    <img className="w-6" src={Logout} alt="Logout" />
-                                )
-                            }
+                            {isLoading ? (
+                                <div className="w-6 h-6 border-2 border-gray-500 border-t-transparent rounded-full animate-spin"></div>
+                            ) : (
+                                <img className="w-6" src={Logout} alt="Logout" />
+                            )}
                         </button>
                     </div>
                 </div>
             </div>
         </div>
-    )
+    );
 }
