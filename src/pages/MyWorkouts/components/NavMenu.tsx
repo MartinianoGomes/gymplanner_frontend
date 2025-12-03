@@ -17,7 +17,8 @@ export default function NavMenu() {
                 setUser(res.data);
             })
             .catch(() => {
-                toast.error("Erro ao buscar dados do usuário.");
+                toast.error("Você não está autenticado.");
+                navigate("/login");
             });
     }, []);
 
@@ -25,8 +26,8 @@ export default function NavMenu() {
         setIsLoading(true);
         api.post('/logout')
             .then(() => {
-                navigate('/login');
                 toast.success('Logout realizado com sucesso!');
+                navigate('/login');
             })
             .catch(() => {
                 toast.error('Erro ao realizar logout.');
