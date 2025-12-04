@@ -1,41 +1,8 @@
 import Logout from "./assets/Logout.svg"
-import { api } from "../../../services/api/api";
-import { useNavigate } from "react-router";
-import { useState, useEffect } from "react";
-import { toast } from "sonner";
-import type { LoggedUser } from "./types";
+import { useUser } from "../../../hooks/useUser";
 
 export default function NavMenu() {
-    const navigate = useNavigate();
-    const [isLoading, setIsLoading] = useState(false);
-
-    const [user, setUser] = useState<LoggedUser | null>(null);
-
-    useEffect(() => {
-        api.get("/me")
-            .then(res => {
-                setUser(res.data);
-            })
-            .catch(() => {
-                toast.error("Você não está autenticado.");
-                navigate("/login");
-            });
-    }, []);
-
-    const handleLogout = () => {
-        setIsLoading(true);
-        api.post('/auth/logout')
-            .then(() => {
-                toast.success('Logout realizado com sucesso!');
-                navigate('/login');
-            })
-            .catch(() => {
-                toast.error('Erro ao realizar logout.');
-            })
-            .finally(() => {
-                setIsLoading(false);
-            });
-    };
+    const { user, isLoading, logout } = useUser();
 
     return (
         <div className="flex flex-row h-full">
@@ -58,7 +25,7 @@ export default function NavMenu() {
 
                         <button
                             disabled={isLoading}
-                            onClick={handleLogout}
+                            onClick={logout}
                         >
                             {isLoading ? (
                                 <div className="w-6 h-6 border-2 border-gray-500 border-t-transparent rounded-full animate-spin"></div>
