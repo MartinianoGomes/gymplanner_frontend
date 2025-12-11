@@ -32,7 +32,7 @@ export default function NavMenu() {
 
                 <div className="flex flex-col justify-between rounded-r-lg bg-[#EFEFEF] h-full shadow-xl">
                     <div className="flex flex-col items-center mx-4">
-                        <h1 className="text-xl font-semibold mt-5 mb-5">Menu</h1>
+                        <h1 className="text-2xl font-semibold mt-5 mb-5">Menu</h1>
 
                         <ul className="flex flex-col w-full gap-5">
                             <li className="p-5 hover:bg-[#D9D9D9] rounded-lg cursor-pointer">Meus treinos</li>
