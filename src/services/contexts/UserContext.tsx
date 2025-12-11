@@ -24,7 +24,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     useEffect(() => {
-        if (location.pathname !== '/login' && location.pathname !== '/register') {
+        if (location.pathname !== '/login' && location.pathname !== '/register' && location.pathname !== '/forgot-password' && location.pathname !== '/') {
             refreshUser();
         }
     }, [location.pathname]);

@@ -8,7 +8,7 @@ export default function MyWorkouts() {
     const { weekDays, stats, isLoading, error, refetch } = useWorkouts();
 
     const handleViewDay = (dayKey: string) => {
-        navigate(`/workouts/${dayKey}`);
+        navigate(`/workout/${dayKey}`);
     };
 
     if (isLoading) {

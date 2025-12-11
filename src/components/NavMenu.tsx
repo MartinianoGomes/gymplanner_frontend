@@ -3,10 +3,12 @@ import Logout from "./assets/Logout.svg"
 import { useUser } from "../hooks/useUser";
 import BackImage from "./assets/Back.svg"
 import ForwardImage from "./assets/Forward.svg"
+import { useNavigate } from "react-router";
 
 export default function NavMenu() {
     const { user, isLoading, logout } = useUser();
     const [isOpen, setIsOpen] = useState(false);
+    const navigate = useNavigate();
 
     return (
         <>
@@ -35,7 +37,11 @@ export default function NavMenu() {
                         <h1 className="text-2xl font-semibold mt-5 mb-5">Menu</h1>
 
                         <ul className="flex flex-col w-full gap-5">
-                            <li className="p-5 hover:bg-[#D9D9D9] rounded-lg cursor-pointer">Meus treinos</li>
+                            <li
+                                onClick={() => navigate('/workouts')}
+                                className="p-5 hover:bg-[#D9D9D9] rounded-lg cursor-pointer">
+                                Meus treinos
+                            </li>
                             <li className="p-5 hover:bg-[#D9D9D9] rounded-lg cursor-pointer">Criar treino</li>
                             <li className="p-5 hover:bg-[#D9D9D9] rounded-lg cursor-pointer">Sugestões</li>
                             <li className="p-5 hover:bg-[#D9D9D9] rounded-lg cursor-pointer">Minhas refeições</li>

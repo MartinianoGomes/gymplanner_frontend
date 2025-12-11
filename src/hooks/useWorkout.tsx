@@ -16,16 +16,13 @@ const DAY_NAMES: Record<number, { name: string; key: string }> = {
 export function useWorkouts() {
     const [workouts, setWorkouts] = useState<Workout[]>([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
 
     const fetchWorkouts = async () => {
         try {
             setIsLoading(true);
-            setError(null);
             const data = await workoutService.getAll();
             setWorkouts(data);
         } catch {
-            setError("Erro ao carregar treinos");
             toast.error("Erro ao carregar treinos. Tente novamente.");
         } finally {
             setIsLoading(false);
@@ -60,5 +57,5 @@ export function useWorkouts() {
         ).size,
     };
 
-    return { workouts, weekDays, stats, isLoading, error, refetch: fetchWorkouts };
+    return { workouts, weekDays, stats, isLoading, refetch: fetchWorkouts };
 }

@@ -9,14 +9,14 @@ import MyWorkouts from "./pages/MyWorkouts/MyWorkouts"
 
 function App() {
   const location = useLocation();
-  const showNavMenu = location.pathname !== '/login' && location.pathname !== '/register' && location.pathname !== '/';
+  const showNavMenu = location.pathname !== '/login' && location.pathname !== '/register' && location.pathname !== '/' && location.pathname !== '/forgot-password';
 
   return (
     <div className="min-h-screen">
-      <Toaster richColors position="top-left" />
+      <Toaster richColors closeButton position="top-left" />
       {showNavMenu && <NavMenu />}
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<h1>Home</h1>} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/workouts" element={<MyWorkouts />} />
