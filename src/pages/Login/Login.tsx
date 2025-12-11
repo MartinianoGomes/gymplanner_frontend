@@ -29,7 +29,7 @@ export default function Login() {
             .then(({ status }) => {
                 if (status === 200) toast.success("Login realizado com sucesso!");
 
-                navigate('/');
+                navigate('/workouts');
             })
             .catch((error) => {
                 if (error instanceof AxiosError && !error.response) toast.error("Ocorreu um erro ao tentar fazer login. Por favor, tente novamente mais tarde.");

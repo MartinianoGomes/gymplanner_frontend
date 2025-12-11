@@ -4,6 +4,7 @@ import Register from "./pages/Register/Register"
 import { Toaster } from "sonner"
 import Test from "./pages/Test"
 import NavMenu from "./components/NavMenu"
+import MyWorkouts from "./pages/MyWorkouts/MyWorkouts"
 
 
 function App() {
@@ -18,7 +19,8 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/test" element={<Test />}></Route>
+        <Route path="/workouts" element={<MyWorkouts />} />
+        <Route path="/test" element={<Test />} />
       </Routes>
     </div>
   )
