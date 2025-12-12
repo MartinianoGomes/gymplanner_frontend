@@ -26,8 +26,8 @@ export default function Register() {
         setIsLoading(true);
 
         api.post('/auth/register', data)
-            .then(({ status }) => {
-                if (status === 201) toast.success('Cadastro realizado com sucesso! Faça login para continuar.');
+            .then(() => {
+                toast.success('Cadastro realizado com sucesso! Faça login para continuar.');
 
                 navigate('/login');
             })

@@ -1,9 +1,7 @@
-import NavMenu from "./MyWorkouts/components/NavMenu"
+import MyWorkouts from "./MyWorkouts/MyWorkouts";
 
 export default function Test() {
     return (
-        <div className="flex items-center justify-center h-screen">
-            <NavMenu />
-        </div>
+        <MyWorkouts />
     )
 }
