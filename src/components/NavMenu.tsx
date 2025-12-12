@@ -45,6 +45,14 @@ export default function NavMenu() {
                             <li className="p-5 hover:bg-[#D9D9D9] rounded-lg cursor-pointer">Criar treino</li>
                             <li className="p-5 hover:bg-[#D9D9D9] rounded-lg cursor-pointer">Sugestões</li>
                             <li className="p-5 hover:bg-[#D9D9D9] rounded-lg cursor-pointer">Minhas refeições</li>
+
+                            {user?.role === "ADMIN" && (
+                                <li
+                                    onClick={() => navigate('/admin')}
+                                    className="p-5 hover:bg-[#D9D9D9] rounded-lg cursor-pointer text-amber-600 font-medium">
+                                    Painel Administrativo
+                                </li>
+                            )}
                         </ul>
                     </div>
 
