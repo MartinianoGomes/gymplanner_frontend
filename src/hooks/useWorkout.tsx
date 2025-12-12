@@ -16,13 +16,16 @@ const DAY_NAMES: Record<number, { name: string; key: string }> = {
 export function useWorkouts() {
     const [workouts, setWorkouts] = useState<Workout[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
     const fetchWorkouts = async () => {
         try {
             setIsLoading(true);
-            const data = await workoutService.getAll();
+            setError(null);
+            const data = await workoutService.getMyWorkouts();
             setWorkouts(data);
         } catch {
+            setError("Erro ao carregar treinos. Tente novamente.");
             toast.error("Erro ao carregar treinos. Tente novamente.");
         } finally {
             setIsLoading(false);
@@ -50,12 +53,12 @@ export function useWorkouts() {
     });
 
     const stats: WorkoutStats = {
-        totalExercises: workouts.reduce((acc, w) => acc + (w.ExercisesInWorkout?.length ?? 0), 0),
-        activeDays: workouts.filter(w => w.ExercisesInWorkout?.length > 0).length,
+        totalExercises: workouts.reduce((acc, w) => acc + (w.ExercisesInWorkout?.length || 0), 0),
+        activeDays: new Set(workouts.filter(w => (w.ExercisesInWorkout?.length || 0) > 0).map(w => w.day)).size,
         muscleGroups: new Set(
-            workouts.flatMap(w => w.ExercisesInWorkout?.map(e => e.exercise.groupMuscleId) ?? [])
+            workouts.flatMap(w => w.ExercisesInWorkout?.map(e => e.exercise.groupMuscleId) || [])
         ).size,
     };
 
-    return { workouts, weekDays, stats, isLoading, refetch: fetchWorkouts };
+    return { workouts, weekDays, stats, isLoading, error, refetch: fetchWorkouts };
 }
