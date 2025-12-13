@@ -56,7 +56,7 @@ export default function NavMenu() {
                 }`}>
                 <button
                     onClick={() => setIsOpen(!isOpen)}
-                    className="absolute top-4 -right-15 bg-white p-3 rounded-xl shadow-lg transition-all duration-200 hover:shadow-xl hover:scale-105 hover:bg-gradient-to-br hover:from-primary hover:to-primary-light group"
+                    className="absolute top-4 -right-15 bg-white p-3 rounded-xl shadow-lg transition-all duration-200 hover:shadow-xl hover:scale-105 hover:bg-linear-to-br hover:from-primary hover:to-primary-light group"
                 >
                     <img
                         src={isOpen ? BackImage : ForwardImage}
@@ -86,7 +86,7 @@ export default function NavMenu() {
                                                 setIsOpen(false);
                                             }}
                                             className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-left ${isActive(item.path)
-                                                ? 'bg-gradient-to-r from-primary to-primary-light text-white shadow-sm'
+                                                ? 'bg-linear-to-r from-primary to-primary-light text-white shadow-sm'
                                                 : 'text-dark hover:bg-primary/10 hover:text-primary-dark'
                                                 }`}
                                         >
@@ -101,10 +101,10 @@ export default function NavMenu() {
                         </nav>
                     </div>
 
-                    <div className="border-t border-gray-100 bg-gradient-to-br from-gray-50 to-gray-100 rounded-br-2xl">
+                    <div className="border-t border-gray-100 bg-linear-to-br from-gray-50 to-gray-100 rounded-br-2xl">
                         <div className="px-6 py-5 flex items-center justify-between gap-4">
                             <div className="flex items-center gap-3 min-w-0">
-                                <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+                                <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center shrink-0">
                                     <span className="text-primary font-bold text-sm">
                                         {user?.name?.charAt(0).toUpperCase() || '?'}
                                     </span>
@@ -122,7 +122,7 @@ export default function NavMenu() {
                             <button
                                 disabled={isLoading}
                                 onClick={logout}
-                                className="p-2 rounded-lg hover:bg-red-50 transition-all group flex-shrink-0"
+                                className="p-2 rounded-lg hover:bg-red-50 transition-all group shrink-0"
                                 title="Sair"
                             >
                                 {isLoading ? (

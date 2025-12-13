@@ -16,7 +16,7 @@ export default function MyWorkouts() {
 
     if (isLoading) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 w-full flex items-center justify-center">
+            <div className="min-h-screen bg-linear-to-br from-gray-50 to-gray-100 w-full flex items-center justify-center">
                 <div className="flex flex-col items-center gap-4">
                     <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
                     <p className="text-dark-lighter font-medium">Carregando treinos...</p>
@@ -27,7 +27,7 @@ export default function MyWorkouts() {
 
     if (error) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 w-full flex items-center justify-center">
+            <div className="min-h-screen bg-linear-to-br from-gray-50 to-gray-100 w-full flex items-center justify-center">
                 <div className="flex flex-col items-center gap-4 text-center px-4">
                     <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center">
                         <svg className="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -37,7 +37,7 @@ export default function MyWorkouts() {
                     <p className="text-red-500 text-lg font-medium">{error}</p>
                     <button
                         onClick={refetch}
-                        className="bg-gradient-to-r from-primary to-primary-light hover:from-primary-dark hover:to-primary text-white font-medium px-6 py-3 rounded-xl transition-all shadow-sm hover:shadow"
+                        className="bg-linear-to-r from-primary to-primary-light hover:from-primary-dark hover:to-primary text-white font-medium px-6 py-3 rounded-xl transition-all shadow-sm hover:shadow"
                     >
                         Tentar novamente
                     </button>
@@ -47,7 +47,7 @@ export default function MyWorkouts() {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 w-full">
+        <div className="min-h-screen bg-linear-to-br from-gray-50 to-gray-100 w-full flex items-center justify-center">
             <div className="w-full max-w-5xl mx-auto px-4 pt-20 pb-8 md:pt-24 md:pb-12">
                 <div className="text-center mb-8 md:mb-10">
                     <div className="inline-flex items-center gap-2 bg-primary/10 text-primary-dark px-4 py-1.5 rounded-full text-sm font-medium mb-4">
@@ -75,7 +75,7 @@ export default function MyWorkouts() {
                         <button
                             onClick={() => setActiveTab("schedule")}
                             className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium transition-all ${activeTab === "schedule"
-                                ? "bg-gradient-to-r from-primary to-primary-light text-white shadow-sm"
+                                ? "bg-linear-to-r from-primary to-primary-light text-white shadow-sm"
                                 : "text-dark-lighter hover:text-dark hover:bg-gray-50"
                                 }`}
                         >
@@ -87,7 +87,7 @@ export default function MyWorkouts() {
                         <button
                             onClick={() => setActiveTab("reports")}
                             className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium transition-all ${activeTab === "reports"
-                                ? "bg-gradient-to-r from-primary to-primary-light text-white shadow-sm"
+                                ? "bg-linear-to-r from-primary to-primary-light text-white shadow-sm"
                                 : "text-dark-lighter hover:text-dark hover:bg-gray-50"
                                 }`}
                         >
