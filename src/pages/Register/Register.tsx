@@ -119,8 +119,8 @@ export default function Register() {
                         type="submit"
                         disabled={isLoading}
                         className={`flex items-center justify-center w-full py-3 px-4 border-none rounded-xl text-base cursor-pointer mt-5 mb-2 transition-all font-medium ${isLoading
-                                ? "bg-primary-light cursor-not-allowed"
-                                : "bg-gradient-to-r from-primary to-primary-light hover:from-primary-dark hover:to-primary shadow-sm hover:shadow"
+                            ? "bg-primary-light cursor-not-allowed"
+                            : "bg-linear-to-r from-primary to-primary-light hover:from-primary-dark hover:to-primary shadow-sm hover:shadow"
                             } text-white`}
                     >
                         {isLoading ? (
