@@ -9,6 +9,7 @@ import CreateWorkout from "./pages/CreateWorkout/CreateWorkout"
 import Admin from "./pages/Admin/Admin"
 import Blog from "./pages/Blog/Blog"
 import WorkoutDay from "./pages/WorkoutDay/WorkoutDay"
+import Profile from "./pages/Profile/Profile"
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         <Route path="/create-workout" element={<CreateWorkout />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/blog" element={<Blog />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/test" element={<Test />} />
       </Routes>
     </div>
