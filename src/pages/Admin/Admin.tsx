@@ -136,14 +136,15 @@ export default function Admin() {
     };
 
     const handleDeleteGroup = async (id: string) => {
-        if (!confirm("Tem certeza que deseja excluir este grupo muscular?")) return;
+        if (!confirm("Tem certeza que deseja excluir este grupo muscular? Todos os exercícios vinculados também serão excluídos.")) return;
 
         try {
             await api.delete(`/admin/groupMuscle/delete/${id}`);
             toast.success("Grupo muscular excluído com sucesso!");
             fetchGroupMuscles();
+            fetchExercises(); // Atualiza a lista de exercícios também
         } catch (error) {
-            toast.error("Erro ao excluir grupo muscular. Verifique se não há exercícios vinculados.");
+            toast.error("Erro ao excluir grupo muscular.");
         }
     };
 
@@ -232,8 +233,10 @@ export default function Admin() {
             await api.delete(`/admin/user/delete/${id}`);
             toast.success("Usuário excluído com sucesso!");
             fetchUsers();
-        } catch (error) {
-            toast.error("Erro ao excluir usuário");
+        } catch (error: any) {
+            console.error("Erro ao excluir usuário:", error);
+            const message = error?.response?.data?.error || error?.response?.data?.details || "Erro ao excluir usuário";
+            toast.error(message);
         }
     };
 

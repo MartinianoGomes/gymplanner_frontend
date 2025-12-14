@@ -34,7 +34,9 @@ export default function ReportSection({ workouts }: ReportSectionProps) {
         const muscleGroupNames: Record<string, string> = {};
 
         workouts.forEach(workout => {
-            workout.ExercisesInWorkout?.forEach(exercise => {
+            // Filtrar exercícios válidos (que não foram deletados)
+            const validExercises = workout.ExercisesInWorkout?.filter(e => e.exercise && e.exercise.groupMuscleId) ?? [];
+            validExercises.forEach(exercise => {
                 const groupId = exercise.exercise.groupMuscleId;
                 const groupName = exercise.exercise.groupMuscle?.name || groupId;
                 muscleGroupCount[groupId] = (muscleGroupCount[groupId] || 0) + 1;
@@ -57,7 +59,9 @@ export default function ReportSection({ workouts }: ReportSectionProps) {
         const exercisesByDay = Array(7).fill(0);
         workouts.forEach(workout => {
             if (workout.day >= 1 && workout.day <= 7) {
-                exercisesByDay[workout.day - 1] = workout.ExercisesInWorkout?.length || 0;
+                // Contar apenas exercícios válidos
+                const validCount = workout.ExercisesInWorkout?.filter(e => e.exercise && e.exercise.name)?.length || 0;
+                exercisesByDay[workout.day - 1] = validCount;
             }
         });
 
