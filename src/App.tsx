@@ -7,6 +7,7 @@ import NavMenu from "./components/NavMenu"
 import MyWorkouts from "./pages/MyWorkouts/MyWorkouts"
 import CreateWorkout from "./pages/CreateWorkout/CreateWorkout"
 import Admin from "./pages/Admin/Admin"
+import Blog from "./pages/Blog/Blog"
 
 
 function App() {
@@ -24,7 +25,7 @@ function App() {
         <Route path="/workouts" element={<MyWorkouts />} />
         <Route path="/create-workout" element={<CreateWorkout />} />
         <Route path="/admin" element={<Admin />} />
-
+        <Route path="/blog" element={<Blog />} />
         <Route path="/test" element={<Test />} />
       </Routes>
     </div>
