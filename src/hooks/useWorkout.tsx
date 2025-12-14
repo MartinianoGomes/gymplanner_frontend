@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { workoutService } from "../services/workoutService";
 import type { Workout, DayWorkout, WorkoutStats } from "../types/Workout";
 import { toast } from "sonner";
+import { useUser } from "./useUser";
 
 const DAY_NAMES: Record<number, { name: string; key: string }> = {
     1: { name: "Segunda-feira", key: "segunda" },
@@ -14,6 +15,7 @@ const DAY_NAMES: Record<number, { name: string; key: string }> = {
 };
 
 export function useWorkouts() {
+    const { user } = useUser();
     const [workouts, setWorkouts] = useState<Workout[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -33,8 +35,12 @@ export function useWorkouts() {
     };
 
     useEffect(() => {
-        fetchWorkouts();
-    }, []);
+        // Limpa os treinos quando o usuário muda
+        setWorkouts([]);
+        if (user?.id) {
+            fetchWorkouts();
+        }
+    }, [user?.id]);
 
     const weekDays: DayWorkout[] = Object.entries(DAY_NAMES).map(([dayNumber, { name, key }]) => {
         const dayNum = parseInt(dayNumber);
