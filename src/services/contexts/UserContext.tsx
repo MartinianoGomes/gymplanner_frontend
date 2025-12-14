@@ -44,8 +44,12 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
             });
     };
 
+    const clearUser = () => {
+        setUser(null);
+    };
+
     return (
-        <UserContextType.Provider value={{ user, isLoading, refreshUser, logout }}>
+        <UserContextType.Provider value={{ user, isLoading, refreshUser, logout, clearUser }}>
             {children}
         </UserContextType.Provider>
     );

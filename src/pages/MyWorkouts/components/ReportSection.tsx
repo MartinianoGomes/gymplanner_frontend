@@ -12,19 +12,6 @@ interface MuscleGroupData {
     color: string;
 }
 
-const MUSCLE_GROUP_NAMES: Record<string, string> = {
-    "peito": "Peito",
-    "costas": "Costas",
-    "pernas": "Pernas",
-    "ombros": "Ombros",
-    "biceps": "Bíceps",
-    "triceps": "Tríceps",
-    "abdomen": "Abdômen",
-    "gluteos": "Glúteos",
-    "panturrilha": "Panturrilha",
-    "antebraco": "Antebraço",
-};
-
 const COLORS = [
     "bg-primary",
     "bg-primary-dark",
@@ -44,10 +31,16 @@ export default function ReportSection({ workouts }: ReportSectionProps) {
         const muscleGroupCount: Record<string, number> = {};
         let totalExercises = 0;
 
+        const muscleGroupNames: Record<string, string> = {};
+
         workouts.forEach(workout => {
-            workout.ExercisesInWorkout?.forEach(exercise => {
+            // Filtrar exercícios válidos (que não foram deletados)
+            const validExercises = workout.ExercisesInWorkout?.filter(e => e.exercise && e.exercise.groupMuscleId) ?? [];
+            validExercises.forEach(exercise => {
                 const groupId = exercise.exercise.groupMuscleId;
+                const groupName = exercise.exercise.groupMuscle?.name || groupId;
                 muscleGroupCount[groupId] = (muscleGroupCount[groupId] || 0) + 1;
+                muscleGroupNames[groupId] = groupName;
                 totalExercises++;
             });
         });
@@ -55,7 +48,7 @@ export default function ReportSection({ workouts }: ReportSectionProps) {
         // Converter para array ordenado
         const muscleGroups: MuscleGroupData[] = Object.entries(muscleGroupCount)
             .map(([id, count], index) => ({
-                name: MUSCLE_GROUP_NAMES[id] || `Grupo ${id.slice(0, 8)}`,
+                name: muscleGroupNames[id] || `Grupo ${id.slice(0, 8)}`,
                 count,
                 percentage: totalExercises > 0 ? Math.round((count / totalExercises) * 100) : 0,
                 color: COLORS[index % COLORS.length],
@@ -66,7 +59,9 @@ export default function ReportSection({ workouts }: ReportSectionProps) {
         const exercisesByDay = Array(7).fill(0);
         workouts.forEach(workout => {
             if (workout.day >= 1 && workout.day <= 7) {
-                exercisesByDay[workout.day - 1] = workout.ExercisesInWorkout?.length || 0;
+                // Contar apenas exercícios válidos
+                const validCount = workout.ExercisesInWorkout?.filter(e => e.exercise && e.exercise.name)?.length || 0;
+                exercisesByDay[workout.day - 1] = validCount;
             }
         });
 
