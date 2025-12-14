@@ -32,7 +32,7 @@ type Tab = "groupMuscles" | "exercises" | "users";
 export default function Admin() {
     const { user } = useUser();
     const navigate = useNavigate();
-    const [activeTab, setActiveTab] = useState<Tab>("groupMuscles");
+    const [activeTab, setActiveTab] = useState<Tab>("users");
 
     // Estados para Grupos Musculares
     const [groupMuscles, setGroupMuscles] = useState<GroupMuscle[]>([]);
