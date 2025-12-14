@@ -17,7 +17,7 @@ interface PasswordFormData {
 }
 
 export default function Profile() {
-    const { user, refreshUser, logout } = useUser();
+    const { user, refreshUser, clearUser } = useUser();
     const navigate = useNavigate();
     const [isUpdating, setIsUpdating] = useState(false);
     const [isChangingPassword, setIsChangingPassword] = useState(false);
@@ -88,7 +88,7 @@ export default function Profile() {
         try {
             await api.delete("/deleteProfile");
             toast.success("Conta excluída com sucesso");
-            logout();
+            clearUser();
             navigate("/login");
         } catch (error) {
             toast.error("Erro ao excluir conta");
@@ -156,8 +156,8 @@ export default function Profile() {
                             <p className="text-dark-lighter">{user.email}</p>
                             <div className="flex flex-wrap gap-2 mt-3 justify-center md:justify-start">
                                 <span className={`text-xs font-medium px-3 py-1 rounded-full ${user.role === "ADMIN"
-                                        ? "bg-purple-100 text-purple-700"
-                                        : "bg-primary/10 text-primary-dark"
+                                    ? "bg-purple-100 text-purple-700"
+                                    : "bg-primary/10 text-primary-dark"
                                     }`}>
                                     {user.role === "ADMIN" ? "Administrador" : "Usuário"}
                                 </span>
