@@ -79,7 +79,7 @@ export default function DayCard({ day, onViewDay }: DayCardProps) {
                         {day.preview.slice(0, 4).map((exercise, index) => (
                             <span
                                 key={index}
-                                className="bg-gradient-to-r from-gray-50 to-gray-100 border border-gray-200 px-3 py-1.5 rounded-lg text-xs text-dark font-medium transition-all duration-300 group-hover:border-primary/30 group-hover:from-primary/5 group-hover:to-primary-light/5"
+                                className="bg-linear-to-r from-gray-50 to-gray-100 border border-gray-200 px-3 py-1.5 rounded-lg text-xs text-dark font-medium transition-all duration-300 group-hover:border-primary/30 group-hover:from-primary/5 group-hover:to-primary-light/5"
                             >
                                 {exercise}
                             </span>
@@ -103,7 +103,7 @@ export default function DayCard({ day, onViewDay }: DayCardProps) {
             <button
                 onClick={() => onViewDay(day.dayKey)}
                 className={`w-full flex items-center justify-center gap-2 font-medium px-6 py-3 rounded-xl transition-all duration-300 text-sm md:text-base ${hasExercises
-                    ? 'bg-gradient-to-r from-primary to-primary-light hover:from-primary-dark hover:to-primary text-white shadow-sm hover:shadow-md hover:scale-[1.02]'
+                    ? 'bg-linear-to-r from-primary to-primary-light hover:from-primary-dark hover:to-primary text-white shadow-sm hover:shadow-md hover:scale-[1.02]'
                     : 'bg-gray-100 hover:bg-primary/10 text-gray-600 hover:text-primary-dark'
                     }`}
             >
