@@ -192,7 +192,7 @@ export default function WorkoutDay() {
 
         setIsCreating(true);
         try {
-            const newWorkout = await workoutService.create({
+            await workoutService.create({
                 title,
                 description,
                 day: dayInfo.number,
