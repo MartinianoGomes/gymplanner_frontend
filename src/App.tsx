@@ -5,6 +5,8 @@ import { Toaster } from "sonner"
 import Test from "./pages/Test"
 import NavMenu from "./components/NavMenu"
 import MyWorkouts from "./pages/MyWorkouts/MyWorkouts"
+import CreateWorkout from "./pages/CreateWorkout/CreateWorkout"
+import Admin from "./pages/Admin/Admin"
 
 
 function App() {
@@ -20,6 +22,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/workouts" element={<MyWorkouts />} />
+        <Route path="/create-workout" element={<CreateWorkout />} />
+        <Route path="/admin" element={<Admin />} />
+
         <Route path="/test" element={<Test />} />
       </Routes>
     </div>
