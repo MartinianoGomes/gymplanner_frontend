@@ -1,270 +1,42 @@
-import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router";
-import { toast } from "sonner";
-import { api } from "../../services/api/api";
-import { workoutService } from "../../services/workoutService";
-import { useUser } from "../../hooks/useUser";
-
-interface Exercise {
-    id: string;
-    name: string;
-    description?: string;
-    groupMuscleId: string;
-}
-
-interface GroupMuscle {
-    id: string;
-    name: string;
-    description?: string;
-}
-
-interface ExerciseInWorkout {
-    id: string;
-    exerciseId: string;
-    series: number;
-    reps: number;
-    exercise: Exercise;
-}
-
-interface Workout {
-    id: string;
-    title: string;
-    description?: string;
-    day: number;
-    userId: string;
-    ExercisesInWorkout: ExerciseInWorkout[];
-}
-
-interface SelectedExercise {
-    exerciseId: string;
-    name: string;
-    series: number;
-    reps: number;
-    groupMuscleName: string;
-}
-
-const DAY_NAMES: Record<string, { name: string; number: number }> = {
-    segunda: { name: "Segunda-feira", number: 1 },
-    terca: { name: "Terça-feira", number: 2 },
-    quarta: { name: "Quarta-feira", number: 3 },
-    quinta: { name: "Quinta-feira", number: 4 },
-    sexta: { name: "Sexta-feira", number: 5 },
-    sabado: { name: "Sábado", number: 6 },
-    domingo: { name: "Domingo", number: 7 },
-};
+import { useParams } from "react-router";
+import { useWorkoutDay } from "../../hooks/useWorkoutDay";
+import { DAY_NAMES } from "./types";
 
 export default function WorkoutDay() {
     const { dayKey } = useParams<{ dayKey: string }>();
-    const navigate = useNavigate();
-    const { user } = useUser();
 
-    const [workout, setWorkout] = useState<Workout | null>(null);
-    const [exercises, setExercises] = useState<Exercise[]>([]);
-    const [groupMuscles, setGroupMuscles] = useState<GroupMuscle[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [isCreating, setIsCreating] = useState(false);
-    const [isSaving, setIsSaving] = useState(false);
-
-    // Form states
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const [selectedExercises, setSelectedExercises] = useState<SelectedExercise[]>([]);
-
-    // Add exercise states
-    const [selectedGroupMuscle, setSelectedGroupMuscle] = useState<string>("");
-    const [selectedExercise, setSelectedExercise] = useState<string>("");
-    const [series, setSeries] = useState<number>(3);
-    const [reps, setReps] = useState<number>(12);
-    const [showAddForm, setShowAddForm] = useState(false);
-
-    const dayInfo = dayKey ? DAY_NAMES[dayKey] : null;
-
-    useEffect(() => {
-        if (!dayInfo) {
-            toast.error("Dia inválido");
-            navigate("/workouts");
-            return;
-        }
-
-        const fetchData = async () => {
-            try {
-                const [exercisesRes, groupMusclesRes, workoutsRes] = await Promise.all([
-                    api.get<Exercise[]>("/exercise"),
-                    api.get<GroupMuscle[]>("/groupMuscle"),
-                    api.get<Workout[]>("/workout"),
-                ]);
-
-                setExercises(exercisesRes.data);
-                setGroupMuscles(groupMusclesRes.data);
-
-                // Find workout for this day
-                const dayWorkout = workoutsRes.data.find(w => w.day === dayInfo.number);
-                if (dayWorkout) {
-                    setWorkout(dayWorkout);
-                    setTitle(dayWorkout.title);
-                    setDescription(dayWorkout.description || "");
-                }
-            } catch (error) {
-                toast.error("Erro ao carregar dados");
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        fetchData();
-    }, [dayInfo, navigate]);
-
-    const getGroupMuscleName = (groupMuscleId: string) => {
-        return groupMuscles.find(g => g.id === groupMuscleId)?.name || "Desconhecido";
-    };
-
-    const filteredExercises = selectedGroupMuscle
-        ? exercises.filter((ex) => ex.groupMuscleId === selectedGroupMuscle)
-        : exercises;
-
-    const handleAddExercise = () => {
-        if (!selectedExercise) {
-            toast.error("Selecione um exercício");
-            return;
-        }
-
-        const exercise = exercises.find(ex => ex.id === selectedExercise);
-        if (!exercise) return;
-
-        const alreadyAdded = selectedExercises.some(ex => ex.exerciseId === selectedExercise);
-        if (alreadyAdded) {
-            toast.error("Este exercício já foi adicionado");
-            return;
-        }
-
-        setSelectedExercises([
-            ...selectedExercises,
-            {
-                exerciseId: exercise.id,
-                name: exercise.name,
-                series,
-                reps,
-                groupMuscleName: getGroupMuscleName(exercise.groupMuscleId),
-            },
-        ]);
-
-        setSelectedExercise("");
-        setSeries(3);
-        setReps(12);
-        setShowAddForm(false);
-        toast.success("Exercício adicionado");
-    };
-
-    const handleRemoveExercise = (exerciseId: string) => {
-        setSelectedExercises(selectedExercises.filter(ex => ex.exerciseId !== exerciseId));
-    };
-
-    const handleRemoveExistingExercise = async (exerciseInWorkoutId: string) => {
-        if (!confirm("Tem certeza que deseja remover este exercício?")) return;
-
-        try {
-            await workoutService.removeExercise(exerciseInWorkoutId);
-            setWorkout(prev => {
-                if (!prev) return null;
-                return {
-                    ...prev,
-                    ExercisesInWorkout: prev.ExercisesInWorkout.filter(e => e.id !== exerciseInWorkoutId),
-                };
-            });
-            toast.success("Exercício removido");
-        } catch (error) {
-            toast.error("Erro ao remover exercício");
-        }
-    };
-
-    const handleCreateWorkout = async () => {
-        if (!title.trim()) {
-            toast.error("Digite um título para o treino");
-            return;
-        }
-
-        if (selectedExercises.length === 0) {
-            toast.error("Adicione pelo menos um exercício");
-            return;
-        }
-
-        if (!user?.id || !dayInfo) return;
-
-        setIsCreating(true);
-        try {
-            await workoutService.create({
-                title,
-                description,
-                day: dayInfo.number,
-                userId: user.id,
-                exercisesInWorkout: selectedExercises.map(ex => ({
-                    exerciseId: ex.exerciseId,
-                    series: ex.series,
-                    reps: ex.reps,
-                })),
-            });
-
-            toast.success("Treino criado com sucesso!");
-            navigate("/workouts");
-        } catch (error) {
-            toast.error("Erro ao criar treino");
-        } finally {
-            setIsCreating(false);
-        }
-    };
-
-    const handleAddExerciseToExistingWorkout = async () => {
-        if (!selectedExercise || !workout) {
-            toast.error("Selecione um exercício");
-            return;
-        }
-
-        const alreadyExists = workout.ExercisesInWorkout.some(e => e.exerciseId === selectedExercise);
-        if (alreadyExists) {
-            toast.error("Este exercício já está no treino");
-            return;
-        }
-
-        setIsSaving(true);
-        try {
-            const newExercise = await workoutService.addExercise(workout.id, {
-                exerciseId: selectedExercise,
-                series,
-                reps,
-            });
-
-            setWorkout(prev => {
-                if (!prev) return null;
-                return {
-                    ...prev,
-                    ExercisesInWorkout: [...prev.ExercisesInWorkout, newExercise],
-                };
-            });
-
-            setSelectedExercise("");
-            setSeries(3);
-            setReps(12);
-            setShowAddForm(false);
-            toast.success("Exercício adicionado ao treino");
-        } catch (error) {
-            toast.error("Erro ao adicionar exercício");
-        } finally {
-            setIsSaving(false);
-        }
-    };
-
-    const handleDeleteWorkout = async () => {
-        if (!workout) return;
-        if (!confirm("Tem certeza que deseja excluir este treino? Esta ação não pode ser desfeita.")) return;
-
-        try {
-            await workoutService.delete(workout.id);
-            toast.success("Treino excluído com sucesso");
-            navigate("/workouts");
-        } catch (error) {
-            toast.error("Erro ao excluir treino");
-        }
-    };
+    const {
+        workout,
+        groupMuscles,
+        dayInfo,
+        filteredExercises,
+        isLoading,
+        isCreating,
+        isSaving,
+        title,
+        setTitle,
+        description,
+        setDescription,
+        selectedExercises,
+        selectedGroupMuscle,
+        setSelectedGroupMuscle,
+        selectedExercise,
+        setSelectedExercise,
+        series,
+        setSeries,
+        reps,
+        setReps,
+        showAddForm,
+        setShowAddForm,
+        handleAddExercise,
+        handleRemoveExercise,
+        handleRemoveExistingExercise,
+        handleCreateWorkout,
+        handleAddExerciseToExistingWorkout,
+        handleDeleteWorkout,
+        getGroupMuscleName,
+        navigate,
+    } = useWorkoutDay({ dayKey, dayNames: DAY_NAMES });
 
     if (isLoading) {
         return (

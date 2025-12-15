@@ -1,40 +1,46 @@
-import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
-import { useUser } from "../../hooks/useUser";
-import { api } from "../../services/api/api";
-import { useNavigate } from "react-router";
-
-interface ProfileFormData {
-    name: string;
-    email: string;
-}
-
-interface PasswordFormData {
-    currentPassword: string;
-    newPassword: string;
-    confirmPassword: string;
-}
+import { useEffect } from "react";
+import { useProfile } from "../../hooks/useProfile";
+import type { ProfileFormData, PasswordFormData } from "./types";
 
 export default function Profile() {
-    const { user, refreshUser, clearUser } = useUser();
-    const navigate = useNavigate();
-    const [isUpdating, setIsUpdating] = useState(false);
-    const [isChangingPassword, setIsChangingPassword] = useState(false);
-    const [isDeleting, setIsDeleting] = useState(false);
-    const [showPasswordForm, setShowPasswordForm] = useState(false);
-    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+    const {
+        user,
+        isUpdating,
+        isChangingPassword,
+        isDeleting,
+        showPasswordForm,
+        setShowPasswordForm,
+        showDeleteConfirm,
+        setShowDeleteConfirm,
+        onUpdateProfile,
+        onChangePassword,
+        handleDeleteAccount,
+        getInitials,
+        formatDate,
+    } = useProfile();
 
     const {
         register: registerProfile,
         handleSubmit: handleSubmitProfile,
         formState: { errors: profileErrors },
+        reset: resetProfile,
     } = useForm<ProfileFormData>({
         defaultValues: {
             name: user?.name || "",
             email: user?.email || "",
         },
     });
+
+    // Atualiza os valores do formulário quando o usuário mudar
+    useEffect(() => {
+        if (user) {
+            resetProfile({
+                name: user.name,
+                email: user.email,
+            });
+        }
+    }, [user, resetProfile]);
 
     const {
         register: registerPassword,
@@ -45,75 +51,6 @@ export default function Profile() {
     } = useForm<PasswordFormData>();
 
     const newPassword = watch("newPassword");
-
-    const onUpdateProfile = async (data: ProfileFormData) => {
-        setIsUpdating(true);
-        try {
-            await api.patch("/updateProfile", {
-                name: data.name,
-                email: data.email,
-            });
-            await refreshUser();
-            toast.success("Perfil atualizado com sucesso!");
-        } catch (error) {
-            toast.error("Erro ao atualizar perfil");
-        } finally {
-            setIsUpdating(false);
-        }
-    };
-
-    const onChangePassword = async (data: PasswordFormData) => {
-        if (data.newPassword !== data.confirmPassword) {
-            toast.error("As senhas não coincidem");
-            return;
-        }
-
-        setIsChangingPassword(true);
-        try {
-            await api.patch("/updateProfile", {
-                password: data.newPassword,
-            });
-            toast.success("Senha alterada com sucesso!");
-            setShowPasswordForm(false);
-            resetPassword();
-        } catch (error) {
-            toast.error("Erro ao alterar senha");
-        } finally {
-            setIsChangingPassword(false);
-        }
-    };
-
-    const handleDeleteAccount = async () => {
-        setIsDeleting(true);
-        try {
-            await api.delete("/deleteProfile");
-            toast.success("Conta excluída com sucesso");
-            clearUser();
-            navigate("/login");
-        } catch (error) {
-            toast.error("Erro ao excluir conta");
-        } finally {
-            setIsDeleting(false);
-        }
-    };
-
-    const getInitials = (name: string) => {
-        return name
-            .split(" ")
-            .map((n) => n[0])
-            .join("")
-            .toUpperCase()
-            .slice(0, 2);
-    };
-
-    const formatDate = (dateString?: string) => {
-        if (!dateString) return "-";
-        return new Date(dateString).toLocaleDateString("pt-BR", {
-            day: "2-digit",
-            month: "long",
-            year: "numeric",
-        });
-    };
 
     if (!user) {
         return (
@@ -251,7 +188,10 @@ export default function Profile() {
                     </div>
 
                     {showPasswordForm ? (
-                        <form onSubmit={handleSubmitPassword(onChangePassword)} className="space-y-4">
+                        <form onSubmit={handleSubmitPassword(async (data) => {
+                            const success = await onChangePassword(data);
+                            if (success) resetPassword();
+                        })} className="space-y-4">
                             <div>
                                 <label className="block text-dark font-medium mb-2 text-sm">Nova Senha</label>
                                 <input
