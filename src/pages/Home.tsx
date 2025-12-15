@@ -81,7 +81,7 @@ const Home: React.FC = () => {
                   físico dos sonhos
                 </span>
               </h1>
-              <p className="text-xl text-dark-lighter max-w-2xl mx-auto lg:mx-0 leading-relaxed text-justify">
+              <p className="text-xl text-dark-lighter max-w-2xl mx-auto lg:mx-0 leading-relaxed">
                 Planejar seus treinos não precisa ser um treino. Organize sua
                 rotina, acompanhe sua evolução e bata suas metas com o
                 GymPlanner.
@@ -151,7 +151,7 @@ const Home: React.FC = () => {
             <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-dark sm:text-4xl">
               Tudo o que você precisa para evoluir
             </p>
-            <p className="mt-4 max-w-2xl text-xl text-dark-muted mx-auto text-center">
+            <p className="mt-4 max-w-2xl text-xl text-dark-muted mx-auto">
               De treinos para iniciantes a divisões avançadas, o GymPlanner se
               adapta ao seu estilo de treino.
             </p>
@@ -164,7 +164,7 @@ const Home: React.FC = () => {
               <h3 className="text-xl font-bold text-dark mb-3">
                 Agenda personalizada
               </h3>
-              <p className="text-dark-lighter leading-relaxed text-justify">
+              <p className="text-dark-lighter leading-relaxed">
                 Planeje sua semana com antecedência. Arraste e solte treinos
                 para encaixar na sua rotina corrida. Nunca mais falhe no dia de
                 pernas.
@@ -177,7 +177,7 @@ const Home: React.FC = () => {
               <h3 className="text-xl font-bold text-dark mb-3">
                 Foco em grupos musculares
               </h3>
-              <p className="text-dark-lighter leading-relaxed text-justify">
+              <p className="text-dark-lighter leading-relaxed">
                 Escolha quais grupos musculares quer priorizar. O mapa corporal
                 visual ajuda a garantir um treino equilibrado.
               </p>
@@ -189,7 +189,7 @@ const Home: React.FC = () => {
               <h3 className="text-xl font-bold text-dark mb-3">
                 Análises de progresso
               </h3>
-              <p className="text-dark-lighter leading-relaxed text-justify">
+              <p className="text-dark-lighter leading-relaxed">
                 Visualize seus ganhos com gráficos intuitivos. Acompanhe carga,
                 repetições e medidas corporais ao longo do tempo.
               </p>
@@ -288,15 +288,13 @@ const Home: React.FC = () => {
 
             <div className="order-1 lg:order-2 space-y-6">
               <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center text-primary mb-4">
-                <span className="material-icons-round text-2xl">
-                    <Grid2x2Check size={25} strokeWidth={2.5} />
-                </span>
+                <Grid2x2Check size={25} strokeWidth={2.5} />
               </div>
-                <h2 className="text-3xl sm:text-4xl font-extrabold text-dark text-justify">
+                <h2 className="text-3xl sm:text-4xl font-extrabold text-dark">
                         Controle total dos seus{" "}
             <span className="text-primary">treinos em um só lugar</span>
                 </h2>
-              <p className="text-lg text-dark-lighter leading-relaxed text-justify">
+              <p className="text-lg text-dark-lighter leading-relaxed">
                 A GymPlanner foi criada para simplificar sua rotina na academia. Registre exercícios, séries, repetições e cargas de forma rápida e acompanhe sua evolução ao longo do tempo. Tenha uma visão clara dos seus treinos semanais e mantenha o foco no que realmente importa: evoluir com consistência.
               </p>
               <ul className="space-y-4 pt-4">
@@ -337,7 +335,8 @@ const Home: React.FC = () => {
             Treine todos os grupos musculares
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="group relative rounded-2xl overflow-hidden aspect-square cursor-pointer">
+            {/* Substituição de aspect-square por altura fixa responsiva - melhor compatibilidade */}
+            <div className="group relative rounded-2xl overflow-hidden cursor-pointer w-full h-48 sm:h-56 md:h-64">
               <img
                 src="/abdomen.jpg"
                 alt="Treino de corpo"
@@ -350,7 +349,7 @@ const Home: React.FC = () => {
               </div>
             </div>
 
-            <div className="group relative rounded-2xl overflow-hidden aspect-square cursor-pointer">
+            <div className="group relative rounded-2xl overflow-hidden cursor-pointer w-full h-48 sm:h-56 md:h-64">
               <img
                 src="/braco.jpg"
                 className="w-full h-full object-cover group-hover:scale-110 transition duration-500"
@@ -362,7 +361,7 @@ const Home: React.FC = () => {
               </div>
             </div>
 
-            <div className="group relative rounded-2xl overflow-hidden aspect-square cursor-pointer">
+            <div className="group relative rounded-2xl overflow-hidden cursor-pointer w-full h-48 sm:h-56 md:h-64">
               <img
                 src="/perna.jpg"
                 alt="Treino de pernas"
@@ -375,7 +374,7 @@ const Home: React.FC = () => {
               </div>
             </div>
 
-            <div className="group relative rounded-2xl overflow-hidden aspect-square cursor-pointer">
+            <div className="group relative rounded-2xl overflow-hidden cursor-pointer w-full h-48 sm:h-56 md:h-64">
               <img
                 src="/costa.jpg"
                 alt="Treino de costas"
