@@ -21,6 +21,11 @@ export interface ExerciseInWorkout {
         name: string;
         description?: string;
         groupMuscleId: string;
+        groupMuscle?: {
+            id: string;
+            name: string;
+            description?: string;
+        };
     };
 }
 

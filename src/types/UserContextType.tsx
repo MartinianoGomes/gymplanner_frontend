@@ -6,6 +6,7 @@ export type UserContextType = {
     isLoading: boolean;
     refreshUser: () => Promise<void>;
     logout: () => Promise<void>;
+    clearUser: () => void;
 }
 
 export const UserContextType = createContext<UserContextType | null>(null);

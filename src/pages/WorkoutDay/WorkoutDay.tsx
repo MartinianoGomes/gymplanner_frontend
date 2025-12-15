@@ -638,7 +638,7 @@ export default function WorkoutDay() {
                                 </div>
                             ) : (
                                 <div className="space-y-2">
-                                    {workout.ExercisesInWorkout.map((ex, index) => (
+                                    {workout.ExercisesInWorkout.filter(ex => ex.exercise && ex.exercise.name).map((ex, index) => (
                                         <div
                                             key={ex.id}
                                             className="flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-all group"
@@ -673,18 +673,18 @@ export default function WorkoutDay() {
                             <h3 className="font-semibold text-dark mb-3">Resumo do Treino</h3>
                             <div className="grid grid-cols-3 gap-4 text-center">
                                 <div>
-                                    <p className="text-2xl font-bold text-primary">{workout.ExercisesInWorkout.length}</p>
+                                    <p className="text-2xl font-bold text-primary">{workout.ExercisesInWorkout.filter(ex => ex.exercise && ex.exercise.name).length}</p>
                                     <p className="text-sm text-dark-lighter">Exercícios</p>
                                 </div>
                                 <div>
                                     <p className="text-2xl font-bold text-primary">
-                                        {workout.ExercisesInWorkout.reduce((acc, ex) => acc + ex.series, 0)}
+                                        {workout.ExercisesInWorkout.filter(ex => ex.exercise && ex.exercise.name).reduce((acc, ex) => acc + ex.series, 0)}
                                     </p>
                                     <p className="text-sm text-dark-lighter">Séries totais</p>
                                 </div>
                                 <div>
                                     <p className="text-2xl font-bold text-primary">
-                                        {new Set(workout.ExercisesInWorkout.map(ex => ex.exercise.groupMuscleId)).size}
+                                        {new Set(workout.ExercisesInWorkout.filter(ex => ex.exercise && ex.exercise.groupMuscleId).map(ex => ex.exercise.groupMuscleId)).size}
                                     </p>
                                     <p className="text-sm text-dark-lighter">Grupos musculares</p>
                                 </div>

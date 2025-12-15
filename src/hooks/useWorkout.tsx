@@ -46,13 +46,16 @@ export function useWorkouts() {
         const dayNum = parseInt(dayNumber);
         const workout = workouts.find(w => w.day === dayNum);
 
+        // Filtrar exercícios que podem ter sido deletados (exercise pode ser null)
+        const validExercises = workout?.ExercisesInWorkout?.filter(e => e.exercise && e.exercise.name) ?? [];
+
         return {
             id: dayNumber,
             name,
             dayKey: key,
             dayNumber: dayNum,
-            exerciseCount: workout?.ExercisesInWorkout?.length ?? 0,
-            preview: workout?.ExercisesInWorkout?.slice(0, 3).map(e => e.exercise.name) ?? [],
+            exerciseCount: validExercises.length,
+            preview: validExercises.slice(0, 3).map(e => e.exercise.name),
             workoutId: workout?.id,
             workoutTitle: workout?.title,
         };
