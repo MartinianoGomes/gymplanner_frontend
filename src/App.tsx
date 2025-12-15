@@ -10,6 +10,7 @@ import Admin from "./pages/Admin/Admin"
 import Blog from "./pages/Blog/Blog"
 import WorkoutDay from "./pages/WorkoutDay/WorkoutDay"
 import Profile from "./pages/Profile/Profile"
+import Home from "./pages/Home.tsx";
 
 
 function App() {
@@ -21,7 +22,7 @@ function App() {
       <Toaster richColors closeButton position="top-left" />
       {showNavMenu && <NavMenu />}
       <Routes>
-        <Route path="/" element={<h1>Home</h1>} />
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/workouts" element={<MyWorkouts />} />
