@@ -47,18 +47,18 @@ const Home: React.FC = () => {
               <div className="flex items-center space-x-4 ml-4">
                 <button 
                   onClick={() => navigate("/login")}
-                  className="text-gray-900 dark:text-white font-medium hover:text-primary transition">
+                  className="text-dark font-medium hover:text-primary transition">
                   Entrar
                 </button>
                 <button 
                   onClick={() => navigate("/register")}
-                  className="bg-primary hover:bg-yellow-600 text-white px-5 py-2 rounded-full font-medium transition shadow-lg shadow-primary/30">
+                  className="bg-primary hover:bg-primary-dark text-white px-5 py-2 rounded-full font-medium transition shadow-lg">
                   Criar conta
                 </button>
               </div>
             </div>
             <div className="md:hidden flex items-center">
-              <button className="text-gray-600 dark:text-gray-300 hover:text-primary">
+              <button className="text-dark-lighter hover:text-primary">
                 <span className="material-icons-round text-3xl">menu</span>
               </button>
             </div>
@@ -71,17 +71,17 @@ const Home: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-8 text-center lg:text-left">
-              <div className="inline-flex items-center px-3 py-1 rounded-full bg-orange-100 dark:bg-orange-900/30 text-primary text-sm font-semibold mb-2">
+              <div className="inline-flex items-center px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-semibold mb-2">
                 Planejador de treinos nº 1
               </div>
-              <h1 className="text-5xl lg:text-7xl font-extrabold tracking-tight text-gray-900 dark:text-white leading-tight">
+              <h1 className="text-5xl lg:text-7xl font-extrabold tracking-tight text-dark leading-tight">
                 Construa o{" "}
                 <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-orange-600">
+                <span className="text-primary">
                   físico dos sonhos
                 </span>
               </h1>
-              <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto lg:mx-0 leading-relaxed text-justify">
+              <p className="text-xl text-dark-lighter max-w-2xl mx-auto lg:mx-0 leading-relaxed text-justify">
                 Planejar seus treinos não precisa ser um treino. Organize sua
                 rotina, acompanhe sua evolução e bata suas metas com o
                 GymPlanner.
@@ -89,11 +89,11 @@ const Home: React.FC = () => {
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <button 
                   onClick={() => navigate("/register")}
-                  className="bg-primary hover:bg-yellow-600 text-white text-lg px-8 py-4 rounded-xl font-bold transition transform hover:-translate-y-1 shadow-xl shadow-primary/30 flex items-center justify-center">
+                  className="bg-primary hover:bg-primary-dark text-white text-lg px-8 py-4 rounded-xl font-bold transition transform hover:-translate-y-1 shadow-xl flex items-center justify-center">
                   Registrar
                 </button>
               </div>
-              <div className="pt-8 flex items-center justify-center lg:justify-start space-x-6 text-gray-500 dark:text-gray-400 text-sm font-medium">
+              <div className="pt-8 flex items-center justify-center lg:justify-start space-x-6 text-dark-muted text-sm font-medium">
                 <div className="flex items-center">
                   Plano gratuito disponível
                 </div>
@@ -104,8 +104,8 @@ const Home: React.FC = () => {
             </div>
 
             <div className="relative lg:ml-10">
-              <div className="absolute -top-20 -right-20 w-96 h-96 bg-primary/20 rounded-full blur-3xl filter opacity-50 dark:opacity-20 animate-pulse" />
-              <div className="absolute -bottom-20 -left-20 w-72 h-72 bg-orange-600/20 rounded-full blur-3xl filter opacity-50 dark:opacity-20" />
+              <div className="absolute -top-20 -right-20 w-96 h-96 bg-primary/20 rounded-full blur-3xl filter opacity-50 animate-pulse" />
+              <div className="absolute -bottom-20 -left-20 w-72 h-72 bg-primary-dark/20 rounded-full blur-3xl filter opacity-50" />
               <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white dark:border-gray-800 transform rotate-1 hover:rotate-0 transition duration-500">
                 <img
                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGtI1jo_gIL3NidGoIvrzhBu30t0CaZg09eBiBGQdKrNd9eTGZTa9_juZsXi3a4dhyMewoIVkYhEd9fVNcv4tHUyuuWGy9-MpM8v7gAbKKcAvCVsyK84qSKE0w33-Jh4fRNTaQjFgn-ocjuhDxo25gf2UsPa9Nc5ejhaLdSMZ4FJn2qfj_jjnJSXFVfBgho9v5QVWSx5KO9yv4BrjODiLI-x9LycSZE4GhCEG36rK8aGDzF_2v8Fi6g28kzXFGfMSExLlJEYmkvKM"
@@ -148,48 +148,48 @@ const Home: React.FC = () => {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
+            <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-dark sm:text-4xl">
               Tudo o que você precisa para evoluir
             </p>
-            <p className="mt-4 max-w-2xl text-xl text-gray-500 dark:text-gray-400 mx-auto text-center">
+            <p className="mt-4 max-w-2xl text-xl text-dark-muted mx-auto text-center">
               De treinos para iniciantes a divisões avançadas, o GymPlanner se
               adapta ao seu estilo de treino.
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-8 hover:shadow-lg transition duration-300 border border-transparent hover:border-primary/20">
-              <div className="w-14 h-14 bg-orange-100 dark:bg-orange-900/30 rounded-xl flex items-center justify-center mb-6 text-primary">
-                <Calendar size={25} color="#F59E0B" strokeWidth={2.5} />
+              <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6 text-primary">
+                <Calendar size={25} strokeWidth={2.5} />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
+              <h3 className="text-xl font-bold text-dark mb-3">
                 Agenda personalizada
               </h3>
-              <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-justify">
+              <p className="text-dark-lighter leading-relaxed text-justify">
                 Planeje sua semana com antecedência. Arraste e solte treinos
                 para encaixar na sua rotina corrida. Nunca mais falhe no dia de
                 pernas.
               </p>
             </div>
             <div className="bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-8 hover:shadow-lg transition duration-300 border border-transparent hover:border-primary/20">
-              <div className="w-14 h-14 bg-orange-100 dark:bg-orange-900/30 rounded-xl flex items-center justify-center mb-6 text-primary">
-                <PersonStanding size={25} color="#F59E0B" strokeWidth={2.5} />
+              <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6 text-primary">
+                <PersonStanding size={25} strokeWidth={2.5} />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
+              <h3 className="text-xl font-bold text-dark mb-3">
                 Foco em grupos musculares
               </h3>
-              <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-justify">
+              <p className="text-dark-lighter leading-relaxed text-justify">
                 Escolha quais grupos musculares quer priorizar. O mapa corporal
                 visual ajuda a garantir um treino equilibrado.
               </p>
             </div>
             <div className="bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-8 hover:shadow-lg transition duration-300 border border-transparent hover:border-primary/20">
-              <div className="w-14 h-14 bg-orange-100 dark:bg-orange-900/30 rounded-xl flex items-center justify-center mb-6 text-primary">
-                <ChartNoAxesCombined size={25} color="#F59E0B" strokeWidth={2.5} />
+              <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6 text-primary">
+                <ChartNoAxesCombined size={25} strokeWidth={2.5} />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
+              <h3 className="text-xl font-bold text-dark mb-3">
                 Análises de progresso
               </h3>
-              <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-justify">
+              <p className="text-dark-lighter leading-relaxed text-justify">
                 Visualize seus ganhos com gráficos intuitivos. Acompanhe carga,
                 repetições e medidas corporais ao longo do tempo.
               </p>
@@ -206,27 +206,27 @@ const Home: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="order-2 lg:order-1 relative">
-              <div className="absolute inset-0 bg-gradient-to-tr from-primary to-orange-400 rounded-3xl transform rotate-3 scale-105 opacity-20 blur-lg" />
+              <div className="absolute inset-0 bg-gradient-to-tr from-primary to-primary-dark rounded-3xl transform rotate-3 scale-105 opacity-20 blur-lg" />
               <div className="bg-white dark:bg-surface-dark rounded-3xl shadow-2xl p-6 border border-gray-100 dark:border-gray-700 relative z-10">
                 <div className="flex items-center justify-between mb-8 border-b border-gray-100 dark:border-gray-700 pb-4">
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                  <h3 className="text-2xl font-bold text-dark">
                     Meus treinos
                   </h3>
                   <span className="bg-primary/10 text-primary p-2 rounded-lg hover:bg-primary/20 transition">
-                  <Plus size={25} color="#F59E0B" strokeWidth={2.5} />
+                  <Plus size={25} strokeWidth={2.5} />
                   </span>
                 </div>
                 <div className="space-y-4">
                   <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-750 transition cursor-pointer group">
                     <div className="flex items-center space-x-4">
-                      <div className="w-10 h-10 rounded-full bg-white dark:bg-gray-700 flex items-center justify-center text-gray-400 font-bold shadow-sm">
+                      <div className="w-10 h-10 rounded-full bg-white dark:bg-gray-700 flex items-center justify-center text-dark-lighter font-bold shadow-sm">
                         S
                       </div>
                       <div>
-                        <h4 className="font-semibold text-gray-900 dark:text-white group-hover:text-primary transition">
+                        <h4 className="font-semibold text-dark group-hover:text-primary transition">
                           Peito e tríceps
                         </h4>
-                        <p className="text-xs text-gray-500">
+                        <p className="text-xs text-dark-muted">
                           45 min • 6 exercícios
                         </p>
                       </div>
@@ -236,14 +236,14 @@ const Home: React.FC = () => {
 
                   <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-750 transition cursor-pointer group">
                     <div className="flex items-center space-x-4">
-                      <div className="w-10 h-10 rounded-full bg-white dark:bg-gray-700 flex items-center justify-center text-gray-400 font-bold shadow-sm">
+                      <div className="w-10 h-10 rounded-full bg-white dark:bg-gray-700 flex items-center justify-center text-dark-lighter font-bold shadow-sm">
                         T
                       </div>
                       <div>
-                        <h4 className="font-semibold text-gray-900 dark:text-white group-hover:text-primary transition">
+                        <h4 className="font-semibold text-dark group-hover:text-primary transition">
                           Costas e bíceps
                         </h4>
-                        <p className="text-xs text-gray-500">
+                        <p className="text-xs text-dark-muted">
                           50 min • 7 exercícios
                         </p>
                       </div>
@@ -253,14 +253,14 @@ const Home: React.FC = () => {
 
                   <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-750 transition cursor-pointer group">
                     <div className="flex items-center space-x-4">
-                      <div className="w-10 h-10 rounded-full bg-white dark:bg-gray-700 flex items-center justify-center text-gray-400 font-bold shadow-sm">
+                      <div className="w-10 h-10 rounded-full bg-white dark:bg-gray-700 flex items-center justify-center text-dark-lighter font-bold shadow-sm">
                         Q
                       </div>
                       <div>
-                        <h4 className="font-semibold text-gray-900 dark:text-white group-hover:text-primary transition">
+                        <h4 className="font-semibold text-dark group-hover:text-primary transition">
                           Dia de descanso
                         </h4>
-                        <p className="text-xs text-gray-500">Recuperação ativa</p>
+                        <p className="text-xs text-dark-muted">Recuperação ativa</p>
                       </div>
                     </div>
                     <div className="w-3 h-3 rounded-full bg-gray-300 dark:bg-gray-600" />
@@ -268,14 +268,14 @@ const Home: React.FC = () => {
 
                   <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-750 transition cursor-pointer group">
                     <div className="flex items-center space-x-4">
-                      <div className="w-10 h-10 rounded-full bg-white dark:bg-gray-700 flex items-center justify-center text-gray-400 font-bold shadow-sm">
+                      <div className="w-10 h-10 rounded-full bg-white dark:bg-gray-700 flex items-center justify-center text-dark-lighter font-bold shadow-sm">
                         S
                       </div>
                       <div>
-                        <h4 className="font-semibold text-gray-900 dark:text-white group-hover:text-primary transition">
+                        <h4 className="font-semibold text-dark group-hover:text-primary transition">
                           Pernas e ombros
                         </h4>
-                        <p className="text-xs text-gray-500">
+                        <p className="text-xs text-dark-muted">
                           60 min • 8 exercícios
                         </p>
                       </div>
@@ -289,38 +289,38 @@ const Home: React.FC = () => {
             <div className="order-1 lg:order-2 space-y-6">
               <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center text-primary mb-4">
                 <span className="material-icons-round text-2xl">
-                    <Grid2x2Check size={25} color="#F59E0B" strokeWidth={2.5} />
+                    <Grid2x2Check size={25} strokeWidth={2.5} />
                 </span>
               </div>
-                <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-white text-justify">
+                <h2 className="text-3xl sm:text-4xl font-extrabold text-dark text-justify">
                         Controle total dos seus{" "}
             <span className="text-primary">treinos em um só lugar</span>
                 </h2>
-              <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed text-justify">
+              <p className="text-lg text-dark-lighter leading-relaxed text-justify">
                 A GymPlanner foi criada para simplificar sua rotina na academia. Registre exercícios, séries, repetições e cargas de forma rápida e acompanhe sua evolução ao longo do tempo. Tenha uma visão clara dos seus treinos semanais e mantenha o foco no que realmente importa: evoluir com consistência.
               </p>
               <ul className="space-y-4 pt-4">
                 <li className="flex items-start">
                   <span className="material-icons-round text-primary mr-3 mt-1">
-                    <Check size={20} color="#F59E0B" strokeWidth={2.5} />
+                    <Check size={20} strokeWidth={2.5} />
                   </span>
-                  <span className="text-gray-600 dark:text-gray-400">
+                  <span className="text-dark-lighter">
                     Construtor de rotina com arrastar e soltar
                   </span>
                 </li>
                 <li className="flex items-start">
                   <span className="material-icons-round text-primary mr-3 mt-1">
-                    <Check size={20} color="#F59E0B" strokeWidth={2.5} />
+                    <Check size={20} strokeWidth={2.5} />
                   </span>
-                  <span className="text-gray-600 dark:text-gray-400">
+                  <span className="text-dark-lighter">
                     Histórico inteligente de cargas anteriores
                   </span>
                 </li>
                 <li className="flex items-start">
                   <span className="material-icons-round text-primary mr-3 mt-1">
-                    <Check size={20} color="#F59E0B" strokeWidth={2.5} />
+                    <Check size={20} strokeWidth={2.5} />
                   </span>
-                  <span className="text-gray-600 dark:text-gray-400">
+                  <span className="text-dark-lighter">
                     Mapas de calor musculares visuais
                   </span>
                 </li>
@@ -333,7 +333,7 @@ const Home: React.FC = () => {
       {/* ==================== MUSCLE GROUPS ==================== */}
       <section className="py-20 bg-white dark:bg-surface-dark border-t border-gray-100 dark:border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white mb-12">
+          <h2 className="text-3xl font-extrabold text-dark mb-12">
             Treine todos os grupos musculares
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -397,18 +397,18 @@ const Home: React.FC = () => {
         className="py-20 bg-gray-50 dark:bg-gray-900"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center text-gray-900 dark:text-white mb-16">
+          <h2 className="text-3xl font-bold text-center text-dark mb-16">
             Feedback de quem escolheu o GymPlanner
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div className="bg-white dark:bg-surface-dark p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
               <div className="flex items-center mb-4">
                 <div className="flex">
-                     <Star size={20} color="#F59E0B" fill="#F59E0B" />
-                     <Star size={20} color="#F59E0B" fill="#F59E0B" />
-                     <Star size={20} color="#F59E0B" fill="#F59E0B" />
-                     <Star size={20} color="#F59E0B" fill="#F59E0B" />
-                     <Star size={20} color="#F59E0B" fill="#F59E0B" />
+                     <Star size={20} fill="currentColor" className="text-primary" />
+                     <Star size={20} fill="currentColor" className="text-primary" />
+                     <Star size={20} fill="currentColor" className="text-primary" />
+                     <Star size={20} fill="currentColor" className="text-primary" />
+                     <Star size={20} fill="currentColor" className="text-primary" />
                 </div>
             </div>
               <p className="text-gray-600 dark:text-gray-300 mb-6 italic text-justify">
@@ -421,7 +421,7 @@ const Home: React.FC = () => {
                   className="w-10 h-10 rounded-full mr-3"
                 />
                 <div>
-                  <p className="font-bold text-gray-900 dark:text-white text-sm">
+                  <p className="font-bold text-dark text-sm">
                     Diogo Leiticio
                   </p>
                   <p className="text-gray-500 text-xs">Repositor do Atacadão</p>
@@ -432,11 +432,11 @@ const Home: React.FC = () => {
             <div className="bg-white dark:bg-surface-dark p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
               <div className="flex items-center mb-4">
                 <div className="text-yellow-400 flex">
-                     <Star size={20} color="#F59E0B" fill="#F59E0B" />
-                     <Star size={20} color="#F59E0B" fill="#F59E0B" />
-                     <Star size={20} color="#F59E0B" fill="#F59E0B" />
-                     <Star size={20} color="#F59E0B" fill="#F59E0B" />
-                     <Star size={20} color="#F59E0B" fill="#F59E0B" />
+                     <Star size={20} fill="currentColor" className="text-primary" />
+                     <Star size={20} fill="currentColor" className="text-primary" />
+                     <Star size={20} fill="currentColor" className="text-primary" />
+                     <Star size={20} fill="currentColor" className="text-primary" />
+                     <Star size={20} fill="currentColor" className="text-primary" />
                 </div>
               </div>
               <p className="text-gray-600 dark:text-gray-300 mb-6 italic text-justify">
@@ -449,7 +449,7 @@ const Home: React.FC = () => {
                   className="w-10 h-10 rounded-full mr-3"
                 />
                 <div>
-                  <p className="font-bold text-gray-900 dark:text-white text-sm">
+                  <p className="font-bold text-dark text-sm">
                     Jonas Leitado
                   </p>
                   <p className="text-gray-500 text-xs">Engenheiro de Pesca</p>
@@ -460,11 +460,11 @@ const Home: React.FC = () => {
               <div className="bg-white dark:bg-surface-dark p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
               <div className="flex items-center mb-4">
                 <div className="text-yellow-400 flex">
-                     <Star size={20} color="#F59E0B" fill="#F59E0B" />
-                     <Star size={20} color="#F59E0B" fill="#F59E0B" />
-                     <Star size={20} color="#F59E0B" fill="#F59E0B" />
-                     <Star size={20} color="#F59E0B" fill="#F59E0B" />
-                     <Star size={20} color="#F59E0B" fill="#F59E0B" />
+                     <Star size={20} fill="currentColor" className="text-primary" />
+                     <Star size={20} fill="currentColor" className="text-primary" />
+                     <Star size={20} fill="currentColor" className="text-primary" />
+                     <Star size={20} fill="currentColor" className="text-primary" />
+                     <Star size={20} fill="currentColor" className="text-primary" />
                 </div>
               </div>
               <p className="text-gray-600 dark:text-gray-300 mb-6 italic text-justify">
@@ -477,7 +477,7 @@ const Home: React.FC = () => {
                   className="w-10 h-10 rounded-full mr-3"
                 />
                 <div>
-                  <p className="font-bold text-gray-900 dark:text-white text-sm">
+                  <p className="font-bold text-dark text-sm">
                     Miqueias Chupetão
                   </p>
                   <p className="text-gray-500 text-xs">Jogador de Lol</p>
@@ -503,7 +503,7 @@ const Home: React.FC = () => {
           <h2 className="text-4xl font-extrabold text-white mb-6">
             Pronto para alcançar suas metas?
           </h2>
-          <p className="text-xl text-orange-50 mb-10 max-w-2xl mx-auto">
+          <p className="text-xl text-white/90 mb-10 max-w-2xl mx-auto">
             Junte-se a milhares de atletas que estão levando os treinos para o
             próximo nível com o GymPlanner.
           </p>
@@ -517,7 +517,7 @@ const Home: React.FC = () => {
               Baixar aplicativo
             </button>
           </div>
-          <p className="mt-6 text-orange-100 text-sm opacity-80">
+          <p className="mt-6 text-white/75 text-sm opacity-80">
             Nenhum cartão de crédito é necessário. Cancele quando quiser.
           </p>
         </div>
@@ -529,20 +529,20 @@ const Home: React.FC = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 mb-12">
             <div className="col-span-2 lg:col-span-2">
               <div className="flex items-center mb-4">
-                <span className="font-bold text-xl tracking-tight text-gray-900 dark:text-white">
+                <span className="font-bold text-xl tracking-tight text-dark">
                   GYM<span className="text-primary">PLANNER</span>
                 </span>
               </div>
-              <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed max-w-xs">
+              <p className="text-dark-muted text-sm leading-relaxed max-w-xs">
                 A ferramenta ideal para quem leva treino a sério. Planeje,
                 registre e visualize sua evolução em um só lugar.
               </p>
             </div>
             <div>
-              <h4 className="font-bold text-gray-900 dark:text-white mb-4">
+              <h4 className="font-bold text-dark mb-4">
                 Produto
               </h4>
-              <ul className="space-y-2 text-sm text-gray-500 dark:text-gray-400">
+              <ul className="space-y-2 text-sm text-dark-muted">
                 <li>
                   <a href="#" className="hover:text-primary transition">
                     Funcionalidades
@@ -561,10 +561,10 @@ const Home: React.FC = () => {
               </ul>
             </div>
             <div>
-              <h4 className="font-bold text-gray-900 dark:text-white mb-4">
+              <h4 className="font-bold text-dark mb-4">
                 Recursos
               </h4>
-              <ul className="space-y-2 text-sm text-gray-500 dark:text-gray-400">
+              <ul className="space-y-2 text-sm text-dark-muted">
                 <li>
                   <a href="#" className="hover:text-primary transition">
                     Blog
@@ -583,10 +583,10 @@ const Home: React.FC = () => {
               </ul>
             </div>
             <div>
-              <h4 className="font-bold text-gray-900 dark:text-white mb-4">
+              <h4 className="font-bold text-dark mb-4">
                 Legal
               </h4>
-              <ul className="space-y-2 text-sm text-gray-500 dark:text-gray-400">
+              <ul className="space-y-2 text-sm text-dark-muted">
                 <li>
                   <a href="#" className="hover:text-primary transition">
                     Privacidade
@@ -606,7 +606,7 @@ const Home: React.FC = () => {
             </div>
           </div>
           <div className="border-t border-gray-100 dark:border-gray-700 pt-8 flex flex-col md:flex-row justify-center items-center w-full">
-            <p className="text-gray-400 text-sm mb-4 md:mb-0 text-center">
+            <p className="text-dark-muted text-sm mb-4 md:mb-0 text-center">
               © 2023 GymPlanner Inc. Todos os direitos reservados.
             </p>
           </div>
