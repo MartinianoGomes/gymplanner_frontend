@@ -40,7 +40,16 @@ export function useWorkouts() {
         if (user?.id) {
             fetchWorkouts();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user?.id]);
+
+    // Refetch ao montar o componente (para atualizar após navegação)
+    useEffect(() => {
+        if (user?.id) {
+            fetchWorkouts();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const weekDays: DayWorkout[] = Object.entries(DAY_NAMES).map(([dayNumber, { name, key }]) => {
         const dayNum = parseInt(dayNumber);

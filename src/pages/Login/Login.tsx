@@ -1,4 +1,4 @@
-import { api } from "../../services/api/api";
+import { authService } from "../../services/authService";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { useState } from "react";
 import { AxiosError } from "axios";
@@ -25,7 +25,7 @@ export default function Login() {
     const onSubmit: SubmitHandler<LoginFormData> = (data) => {
         setIsLoading(true);
 
-        api.post('/auth/login', data)
+        authService.login(data)
             .then(({ status }) => {
                 if (status === 200) toast.success("Login realizado com sucesso!");
 

@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router';
 import { useForm, type SubmitHandler } from 'react-hook-form';
-import { api } from '../../services/api/api';
+import { authService } from '../../services/authService';
 import { AxiosError } from 'axios';
 
 import { registerSchema, type RegisterData } from './types';
@@ -25,7 +25,7 @@ export default function Register() {
     const onSubmit: SubmitHandler<RegisterData> = (data) => {
         setIsLoading(true);
 
-        api.post('/auth/register', data)
+        authService.register(data)
             .then(() => {
                 toast.success('Cadastro realizado com sucesso! Faça login para continuar.');
 

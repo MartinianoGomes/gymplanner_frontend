@@ -4,11 +4,12 @@ import StatCard from "./components/StatCard";
 import DayCard from "./components/DayCard";
 import ReportSection from "./components/ReportSection";
 import { useWorkouts } from "../../hooks/useWorkout";
+import type { ActiveTab } from "./types";
 
 export default function MyWorkouts() {
     const navigate = useNavigate();
     const { workouts, weekDays, stats, isLoading, error, refetch } = useWorkouts();
-    const [activeTab, setActiveTab] = useState<"schedule" | "reports">("schedule");
+    const [activeTab, setActiveTab] = useState<ActiveTab>("schedule");
 
     const handleViewDay = (dayKey: string) => {
         navigate(`/workout/${dayKey}`);

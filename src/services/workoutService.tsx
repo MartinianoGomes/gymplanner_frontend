@@ -15,6 +15,9 @@ export const workoutService = {
     getById: (id: string) =>
         api.get<Workout>(`/workout/${id}`).then(res => res.data),
 
+    getAll: () =>
+        api.get<Workout[]>("/workout").then(res => res.data),
+
     getMyWorkouts: () =>
         api.get<Workout[]>("/workout").then(res => res.data),
 

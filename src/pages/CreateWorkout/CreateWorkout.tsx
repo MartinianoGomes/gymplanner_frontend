@@ -1,62 +1,34 @@
-import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
-import { api } from "../../services/api/api";
-import { workoutService } from "../../services/workoutService";
+import { useCreateWorkout } from "../../hooks/useCreateWorkout";
 import { useUser } from "../../hooks/useUser";
-
-interface Exercise {
-    id: string;
-    name: string;
-    description?: string;
-    groupMuscleId: string;
-}
-
-interface GroupMuscle {
-    id: string;
-    name: string;
-    description?: string;
-}
-
-interface SelectedExercise {
-    exerciseId: string;
-    name: string;
-    series: number;
-    reps: number;
-    groupMuscleName: string;
-}
-
-interface WorkoutFormData {
-    title: string;
-    description: string;
-    day: number;
-}
-
-const DAYS_OF_WEEK = [
-    { value: 1, label: "Segunda-feira" },
-    { value: 2, label: "Terça-feira" },
-    { value: 3, label: "Quarta-feira" },
-    { value: 4, label: "Quinta-feira" },
-    { value: 5, label: "Sexta-feira" },
-    { value: 6, label: "Sábado" },
-    { value: 7, label: "Domingo" },
-];
+import type { WorkoutFormData } from "./types";
+import { DAYS_OF_WEEK } from "./types";
 
 export default function CreateWorkout() {
     const navigate = useNavigate();
     const { user } = useUser();
 
-    const [exercises, setExercises] = useState<Exercise[]>([]);
-    const [groupMuscles, setGroupMuscles] = useState<GroupMuscle[]>([]);
-    const [selectedExercises, setSelectedExercises] = useState<SelectedExercise[]>([]);
-    const [isLoading, setIsLoading] = useState(false);
-    const [isLoadingData, setIsLoadingData] = useState(true);
-
-    const [selectedGroupMuscle, setSelectedGroupMuscle] = useState<string>("");
-    const [selectedExercise, setSelectedExercise] = useState<string>("");
-    const [series, setSeries] = useState<number>(3);
-    const [reps, setReps] = useState<number>(12);
+    const {
+        // Estados
+        groupMuscles,
+        selectedExercises,
+        isLoading,
+        isLoadingData,
+        selectedGroupMuscle,
+        setSelectedGroupMuscle,
+        selectedExercise,
+        setSelectedExercise,
+        series,
+        setSeries,
+        reps,
+        setReps,
+        filteredExercises,
+        // Handlers
+        handleAddExercise,
+        handleRemoveExercise,
+        handleSubmit: submitWorkout,
+    } = useCreateWorkout(user?.id, () => navigate("/workouts"));
 
     const {
         register,
@@ -70,105 +42,8 @@ export default function CreateWorkout() {
         },
     });
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const [exercisesRes, groupMusclesRes] = await Promise.all([
-                    api.get<Exercise[]>("/exercise"),
-                    api.get<GroupMuscle[]>("/groupMuscle"),
-                ]);
-                setExercises(exercisesRes.data);
-                setGroupMuscles(groupMusclesRes.data);
-            } catch (error) {
-                toast.error("Erro ao carregar dados. Tente novamente.");
-            } finally {
-                setIsLoadingData(false);
-            }
-        };
-
-        fetchData();
-    }, []);
-
-    const filteredExercises = selectedGroupMuscle
-        ? exercises.filter((ex) => ex.groupMuscleId === selectedGroupMuscle)
-        : exercises;
-
-    const handleAddExercise = () => {
-        if (!selectedExercise) {
-            toast.error("Selecione um exercício");
-            return;
-        }
-
-        const exercise = exercises.find((ex) => ex.id === selectedExercise);
-        const groupMuscle = groupMuscles.find((gm) => gm.id === exercise?.groupMuscleId);
-
-        if (!exercise) return;
-
-        const alreadyAdded = selectedExercises.some(
-            (ex) => ex.exerciseId === selectedExercise
-        );
-
-        if (alreadyAdded) {
-            toast.error("Este exercício já foi adicionado");
-            return;
-        }
-
-        setSelectedExercises((prev) => [
-            ...prev,
-            {
-                exerciseId: exercise.id,
-                name: exercise.name,
-                series,
-                reps,
-                groupMuscleName: groupMuscle?.name || "Desconhecido",
-            },
-        ]);
-
-        setSelectedExercise("");
-        setSeries(3);
-        setReps(12);
-        toast.success("Exercício adicionado!");
-    };
-
-    const handleRemoveExercise = (exerciseId: string) => {
-        setSelectedExercises((prev) =>
-            prev.filter((ex) => ex.exerciseId !== exerciseId)
-        );
-    };
-
     const onSubmit = async (data: WorkoutFormData) => {
-        if (!user?.id) {
-            toast.error("Usuário não identificado");
-            return;
-        }
-
-        if (selectedExercises.length === 0) {
-            toast.error("Adicione pelo menos um exercício ao treino");
-            return;
-        }
-
-        setIsLoading(true);
-
-        try {
-            await workoutService.create({
-                title: data.title,
-                description: data.description,
-                day: Number(data.day),
-                userId: user.id,
-                exercisesInWorkout: selectedExercises.map((ex) => ({
-                    exerciseId: ex.exerciseId,
-                    series: ex.series,
-                    reps: ex.reps,
-                })),
-            });
-
-            toast.success("Treino criado com sucesso!");
-            navigate("/workouts");
-        } catch (error) {
-            toast.error("Erro ao criar treino. Tente novamente.");
-        } finally {
-            setIsLoading(false);
-        }
+        await submitWorkout(data);
     };
 
     if (isLoadingData) {
@@ -416,8 +291,8 @@ export default function CreateWorkout() {
                             type="submit"
                             disabled={isLoading || selectedExercises.length === 0}
                             className={`flex items-center justify-center gap-2 px-8 py-3 font-medium rounded-xl transition-all ${isLoading || selectedExercises.length === 0
-                                    ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-                                    : "bg-gradient-to-r from-primary to-primary-light hover:from-primary-dark hover:to-primary text-white shadow-sm hover:shadow-md"
+                                ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                                : "bg-gradient-to-r from-primary to-primary-light hover:from-primary-dark hover:to-primary text-white shadow-sm hover:shadow-md"
                                 }`}
                         >
                             {isLoading ? (

@@ -1,59 +1,55 @@
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
-import { api } from "../../services/api/api";
 import { useUser } from "../../hooks/useUser";
 import { useNavigate } from "react-router";
-
-interface GroupMuscle {
-    id: string;
-    name: string;
-    description?: string;
-    createdAt?: string;
-}
-
-interface Exercise {
-    id: string;
-    name: string;
-    description?: string;
-    groupMuscleId: string;
-    createdAt?: string;
-}
-
-interface User {
-    id: string;
-    name: string;
-    email: string;
-    role: string;
-    createdAt?: string;
-}
-
-type Tab = "groupMuscles" | "exercises" | "users";
+import { useAdmin } from "../../hooks/useAdmin";
+import type { Tab } from "./types";
 
 export default function Admin() {
     const { user } = useUser();
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState<Tab>("users");
 
-    // Estados para Grupos Musculares
-    const [groupMuscles, setGroupMuscles] = useState<GroupMuscle[]>([]);
-    const [isLoadingGroups, setIsLoadingGroups] = useState(true);
-    const [newGroupName, setNewGroupName] = useState("");
-    const [newGroupDescription, setNewGroupDescription] = useState("");
-    const [editingGroup, setEditingGroup] = useState<GroupMuscle | null>(null);
-    const [isSubmittingGroup, setIsSubmittingGroup] = useState(false);
+    const {
+        // Grupos Musculares
+        groupMuscles,
+        isLoadingGroups,
+        newGroupName,
+        setNewGroupName,
+        newGroupDescription,
+        setNewGroupDescription,
+        editingGroup,
+        setEditingGroup,
+        isSubmittingGroup,
+        handleCreateGroup,
+        handleUpdateGroup,
+        handleDeleteGroup,
 
-    // Estados para Exercícios
-    const [exercises, setExercises] = useState<Exercise[]>([]);
-    const [isLoadingExercises, setIsLoadingExercises] = useState(true);
-    const [newExerciseName, setNewExerciseName] = useState("");
-    const [newExerciseDescription, setNewExerciseDescription] = useState("");
-    const [newExerciseGroupId, setNewExerciseGroupId] = useState("");
-    const [editingExercise, setEditingExercise] = useState<Exercise | null>(null);
-    const [isSubmittingExercise, setIsSubmittingExercise] = useState(false);
+        // Exercícios
+        exercises,
+        isLoadingExercises,
+        newExerciseName,
+        setNewExerciseName,
+        newExerciseDescription,
+        setNewExerciseDescription,
+        newExerciseGroupId,
+        setNewExerciseGroupId,
+        editingExercise,
+        setEditingExercise,
+        isSubmittingExercise,
+        handleCreateExercise,
+        handleUpdateExercise,
+        handleDeleteExercise,
 
-    // Estados para Usuários
-    const [users, setUsers] = useState<User[]>([]);
-    const [isLoadingUsers, setIsLoadingUsers] = useState(true);
+        // Usuários
+        users,
+        isLoadingUsers,
+        handleDeleteUser,
+
+        // Utilitários
+        getGroupName,
+        formatDate,
+    } = useAdmin();
 
     // Verificar se é admin
     useEffect(() => {
@@ -62,188 +58,6 @@ export default function Admin() {
             navigate("/workouts");
         }
     }, [user, navigate]);
-
-    // Carregar dados
-    useEffect(() => {
-        fetchGroupMuscles();
-        fetchExercises();
-        fetchUsers();
-    }, []);
-
-    const fetchGroupMuscles = async () => {
-        try {
-            const response = await api.get<GroupMuscle[]>("/groupMuscle");
-            setGroupMuscles(response.data);
-        } catch (error) {
-            toast.error("Erro ao carregar grupos musculares");
-        } finally {
-            setIsLoadingGroups(false);
-        }
-    };
-
-    const fetchExercises = async () => {
-        try {
-            const response = await api.get<Exercise[]>("/exercise");
-            setExercises(response.data);
-        } catch (error) {
-            toast.error("Erro ao carregar exercícios");
-        } finally {
-            setIsLoadingExercises(false);
-        }
-    };
-
-    // Funções para Grupos Musculares
-    const handleCreateGroup = async () => {
-        if (!newGroupName.trim()) {
-            toast.error("Nome do grupo é obrigatório");
-            return;
-        }
-
-        setIsSubmittingGroup(true);
-        try {
-            await api.post("/admin/groupMuscle/create", {
-                name: newGroupName,
-                description: newGroupDescription,
-            });
-            toast.success("Grupo muscular criado com sucesso!");
-            setNewGroupName("");
-            setNewGroupDescription("");
-            fetchGroupMuscles();
-        } catch (error) {
-            toast.error("Erro ao criar grupo muscular");
-        } finally {
-            setIsSubmittingGroup(false);
-        }
-    };
-
-    const handleUpdateGroup = async () => {
-        if (!editingGroup) return;
-
-        setIsSubmittingGroup(true);
-        try {
-            await api.patch(`/admin/groupMuscle/update/${editingGroup.id}`, {
-                name: editingGroup.name,
-                description: editingGroup.description,
-            });
-            toast.success("Grupo muscular atualizado com sucesso!");
-            setEditingGroup(null);
-            fetchGroupMuscles();
-        } catch (error) {
-            toast.error("Erro ao atualizar grupo muscular");
-        } finally {
-            setIsSubmittingGroup(false);
-        }
-    };
-
-    const handleDeleteGroup = async (id: string) => {
-        if (!confirm("Tem certeza que deseja excluir este grupo muscular? Todos os exercícios vinculados também serão excluídos.")) return;
-
-        try {
-            await api.delete(`/admin/groupMuscle/delete/${id}`);
-            toast.success("Grupo muscular excluído com sucesso!");
-            fetchGroupMuscles();
-            fetchExercises(); // Atualiza a lista de exercícios também
-        } catch (error) {
-            toast.error("Erro ao excluir grupo muscular.");
-        }
-    };
-
-    // Funções para Exercícios
-    const handleCreateExercise = async () => {
-        if (!newExerciseName.trim()) {
-            toast.error("Nome do exercício é obrigatório");
-            return;
-        }
-        if (!newExerciseGroupId) {
-            toast.error("Selecione um grupo muscular");
-            return;
-        }
-
-        setIsSubmittingExercise(true);
-        try {
-            await api.post("/admin/exercise/create", {
-                name: newExerciseName,
-                description: newExerciseDescription,
-                groupMuscleId: newExerciseGroupId,
-            });
-            toast.success("Exercício criado com sucesso!");
-            setNewExerciseName("");
-            setNewExerciseDescription("");
-            setNewExerciseGroupId("");
-            fetchExercises();
-        } catch (error) {
-            toast.error("Erro ao criar exercício");
-        } finally {
-            setIsSubmittingExercise(false);
-        }
-    };
-
-    const handleUpdateExercise = async () => {
-        if (!editingExercise) return;
-
-        setIsSubmittingExercise(true);
-        try {
-            await api.patch(`/admin/exercise/update/${editingExercise.id}`, {
-                name: editingExercise.name,
-                description: editingExercise.description,
-                groupMuscleId: editingExercise.groupMuscleId,
-            });
-            toast.success("Exercício atualizado com sucesso!");
-            setEditingExercise(null);
-            fetchExercises();
-        } catch (error) {
-            toast.error("Erro ao atualizar exercício");
-        } finally {
-            setIsSubmittingExercise(false);
-        }
-    };
-
-    const handleDeleteExercise = async (id: string) => {
-        if (!confirm("Tem certeza que deseja excluir este exercício?")) return;
-
-        try {
-            await api.delete(`/admin/exercise/delete/${id}`);
-            toast.success("Exercício excluído com sucesso!");
-            fetchExercises();
-        } catch (error) {
-            toast.error("Erro ao excluir exercício");
-        }
-    };
-
-    const getGroupName = (groupId: string) => {
-        return groupMuscles.find((g) => g.id === groupId)?.name || "Desconhecido";
-    };
-
-    // Funções para Usuários
-    const fetchUsers = async () => {
-        try {
-            const response = await api.get<User[]>("/admin/user");
-            setUsers(response.data);
-        } catch (error) {
-            toast.error("Erro ao carregar usuários");
-        } finally {
-            setIsLoadingUsers(false);
-        }
-    };
-
-    const handleDeleteUser = async (id: string) => {
-        if (!confirm("Tem certeza que deseja excluir este usuário? Esta ação não pode ser desfeita.")) return;
-
-        try {
-            await api.delete(`/admin/user/delete/${id}`);
-            toast.success("Usuário excluído com sucesso!");
-            fetchUsers();
-        } catch (error: any) {
-            console.error("Erro ao excluir usuário:", error);
-            const message = error?.response?.data?.error || error?.response?.data?.details || "Erro ao excluir usuário";
-            toast.error(message);
-        }
-    };
-
-    const formatDate = (dateString?: string) => {
-        if (!dateString) return "-";
-        return new Date(dateString).toLocaleDateString("pt-BR");
-    };
 
     if (user?.role !== "ADMIN") {
         return (
